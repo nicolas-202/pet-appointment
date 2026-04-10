@@ -1,12 +1,135 @@
-<!doctype html><html><head><meta charset="utf-8"><title>Entrega 1</title><style>
-body { font-family: Segoe UI, Arial, sans-serif; max-width: 980px; margin: 28px auto; line-height: 1.45; color: #1f2937; }
-h1, h2, h3 { color: #0f172a; }
-table { border-collapse: collapse; width: 100%; font-size: 13px; }
-th, td { border: 1px solid #d1d5db; padding: 8px; vertical-align: top; }
-code { background: #f3f4f6; padding: 2px 4px; border-radius: 4px; }
-img { max-width: 100%; height: auto; margin: 10px 0; }
-ul { padding-left: 20px; }
-</style></head><body><h1>Entrega 1 - Primer Adelanto de Proyecto</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrega 1 - Primer Adelanto de Proyecto</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2C3E50;
+            background-color: #F9FBFB;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #00D2D3;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #00D2D3;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2C3E50;
+            margin: 25px 0 15px 0;
+            border-left: 4px solid #B2EBF2;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #555;
+            margin: 15px 0 10px 0;
+        }
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #F9FBFB;
+        }
+        th {
+            background: #00D2D3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        tr:hover {
+            background: #F0F4F4;
+        }
+        a {
+            color: #00D2D3;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+        a:hover {
+            border-bottom-color: #00D2D3;
+        }
+        code {
+            background: #F0F4F4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #FF7675;
+        }
+        pre {
+            background: #2C3E50;
+            color: #B2EBF2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        pre code {
+            background: none;
+            color: #B2EBF2;
+            padding: 0;
+        }
+        ul, ol {
+            margin: 10px 0 10px 30px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: 1px solid #E0E0E0;
+        }
+        .meta {
+            background: #F0F4F4;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border-left: 4px solid #FDCB6E;
+        }
+        .checklist {
+            background: #F9FBFB;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .checklist input {
+            margin-right: 10px;
+        }
+        blockquote {
+            border-left: 4px solid #B2EBF2;
+            margin: 15px 0;
+            padding-left: 15px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Entrega 1 - Primer Adelanto de Proyecto</h1>
 <p>Fecha: 11 de abril de 2026
 Proyecto: PetAppointment</p>
 <h2>Contexto del Proyecto</h2>
@@ -127,19 +250,15 @@ Proyecto: PetAppointment</p>
 <h2>4. Primer Bosquejo de la App</h2>
 <p>Estado actual:</p>
 <ul>
-<li>Bosquejos visuales cargados en la carpeta de evidencias.</li>
-</ul>
-<p>Recomendacion para cierre de este punto:</p>
+<li>Bosquejos visuales cargados en la carpeta de evidencias:</li>
+<li>
 <ul>
-<li>Incluir minimo 4 pantallas iniciales:</li>
 <li>Login</li>
+</ul>
+</li>
 <li>Inicio (dashboard)</li>
 <li>Reserva de cita</li>
 <li>Historial/agenda</li>
-</ul>
-<p>Evidencia sugerida:</p>
-<ul>
-<li>Insertar imagenes en esta seccion o anexarlas al documento final de campus.</li>
 </ul>
 <p>Placeholders:</p>
 <p><img alt="Bosquejo pantalla Login" src="evidencias/bosquejo/01-login.png" /></p>
@@ -163,4 +282,7 @@ Proyecto: PetAppointment</p>
 <li>Documento tecnico completo: PetAppointment_Documentacion_Tecnica.md</li>
 <li>Seccion de epicas e historias: secciones/05-epicas-historias-y-tareas-tecnicas.md</li>
 <li>Workflow y Jira: secciones/09-puesta-en-marcha-y-workflow.md</li>
-</ul></body></html>
+</ul>
+    </div>
+</body>
+</html>

@@ -18,11 +18,11 @@ El objetivo de esta entrega es demostrar preparacion tecnica, organizacion del e
 
 ## Integrantes del Proyecto
 
-| Nombre | Codigo | Rol |
-|---|---|---|
-| Nicolas Gonzalez Giraldo | 202369659 | Desarrollador Flutter / Lider Tecnico |
-| Luis Carlos Pedraza Corredor | 202369678 | Desarrollador Flutter / Diseno UI/UX |
-| Luis Carlos Pedraza Corredor | 202369678 | Integracion Supabase / Base de Datos |
+| Nombre                       | Codigo    | Rol                                   |
+| ---------------------------- | --------- | ------------------------------------- |
+| Nicolas Gonzalez Giraldo     | 202369659 | Desarrollador Flutter / Lider Tecnico |
+| Luis Carlos Pedraza Corredor | 202369678 | Desarrollador Flutter / Diseno UI/UX  |
+| Luis Carlos Pedraza Corredor | 202369678 | Integracion Supabase / Base de Datos  |
 
 ## Datos Academicos
 
@@ -119,19 +119,11 @@ Placeholders:
 
 Estado actual:
 
-- Bosquejos visuales cargados en la carpeta de evidencias.
-
-Recomendacion para cierre de este punto:
-
-- Incluir minimo 4 pantallas iniciales:
-  - Login
+- Bosquejos visuales cargados en la carpeta de evidencias:
+- - Login
   - Inicio (dashboard)
   - Reserva de cita
   - Historial/agenda
-
-Evidencia sugerida:
-
-- Insertar imagenes en esta seccion o anexarlas al documento final de campus.
 
 Placeholders:
 
