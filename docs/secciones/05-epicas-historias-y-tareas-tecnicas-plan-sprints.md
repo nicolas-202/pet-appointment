@@ -17,8 +17,9 @@ Este documento conserva la vista ejecutiva del proyecto, pero además desglosa c
 3. [Historias de Usuario (HU)](#historias-de-usuario)
 4. [Tareas Técnicas (TASK) por Sprint](#tareas-técnicas-por-sprint)
 5. [Desglose ampliado de HU y tareas](#desglose-ampliado-de-hu-y-tareas)
-6. [Matriz de Asignación de Tareas](#matriz-de-asignación-de-tareas)
-7. [Definición de Terminado](#definición-de-terminado)
+6. [Lista sugerida de issues para Jira](#lista-sugerida-de-issues-para-jira)
+7. [Matriz de Asignación de Tareas](#matriz-de-asignación-de-tareas)
+8. [Definición de Terminado](#definición-de-terminado)
 
 ---
 
@@ -347,7 +348,67 @@ Este documento conserva la vista ejecutiva del proyecto, pero además desglosa c
 
 ---
 
-## 6. Matriz de Asignación de Tareas
+## 5.5 Lista sugerida de issues para Jira
+
+La siguiente lista propone cómo crear los issues en Jira para ejecutar el plan sin perder trazabilidad. La recomendación es mantener esta jerarquía:
+
+**Epic -> Story -> Sub-task**
+
+Cuando un trabajo sea transversal o técnico puro, usar **Technical Story** o **Task técnica** según la convención del tablero.
+
+### Sprint 2 — Autenticación y Gestión de Mascotas
+
+| Tipo | Issue sugerido | Parent | Responsable | Prioridad |
+|---|---|---|---|---|
+| Epic | Autenticación y gestión de usuarios | - | Equipo | Alta |
+| Story | Registrar usuario con correo y contraseña | EP-01 | Nicolas Gonzalez | Alta |
+| Story | Iniciar sesión y cerrar sesión | EP-01 | Nicolas Gonzalez | Alta |
+| Story | Recuperar contraseña por email | EP-01 | Nicolas Gonzalez | Media |
+| Story | Ver y editar perfil de usuario | EP-01 | Luis Carlos Pedraza | Media |
+| Epic | Gestión de mascotas | - | Equipo | Alta |
+| Story | Registrar mascota | EP-02 | Luis Carlos Pedraza | Alta |
+| Story | Listar mascotas registradas | EP-02 | Luis Carlos Pedraza | Alta |
+| Story | Editar mascota | EP-02 | Luis Carlos Pedraza | Media |
+| Story | Eliminar mascota con confirmación | EP-02 | Luis Carlos Pedraza | Media |
+| Technical Story | Configurar Supabase base y RLS inicial | EP-07 / EP-01 | Luis Carlos Pedraza | Alta |
+
+### Sprint 3 — Reserva de Citas y Panel Profesional
+
+| Tipo | Issue sugerido | Parent | Responsable | Prioridad |
+|---|---|---|---|---|
+| Epic | Reserva y gestión de citas | - | Equipo | Alta |
+| Story | Ver calendario de disponibilidad | EP-03 | Nicolas Gonzalez | Alta |
+| Story | Reservar cita con validación de disponibilidad | EP-03 | Nicolas Gonzalez | Alta |
+| Story | Confirmación inmediata de reserva | EP-03 | Nicolas Gonzalez | Media |
+| Story | Ver historial de citas | EP-03 | Nicolas Gonzalez | Media |
+| Story | Cancelar cita con liberación de horario | EP-03 | Luis Carlos Pedraza | Alta |
+| Story | Reprogramar cita | EP-03 | Nicolas Gonzalez | Media |
+| Epic | Panel del profesional | - | Equipo | Alta |
+| Story | Ver agenda diaria y semanal | EP-04 | Luis Carlos Pedraza | Alta |
+| Story | Confirmar cita pendiente | EP-04 | Luis Carlos Pedraza | Media |
+| Story | Actualizar estado de cita | EP-04 | Luis Carlos Pedraza | Alta |
+| Story | Configurar disponibilidad laboral | EP-04 | Luis Carlos Pedraza | Alta |
+
+### Sprint 4 — Notificaciones, Administración y Calidad
+
+| Tipo | Issue sugerido | Parent | Responsable | Prioridad |
+|---|---|---|---|---|
+| Epic | Notificaciones y tiempo real | - | Equipo | Media |
+| Story | Notificar cambio de estado de cita | EP-05 | Nicolas Gonzalez | Alta |
+| Story | Recordatorio 24 horas antes | EP-05 | Nicolas Gonzalez | Alta |
+| Story | Notificar nueva cita al profesional | EP-05 | Nicolas Gonzalez | Media |
+| Epic | Panel de administración | - | Equipo | Media |
+| Story | Gestionar servicios | EP-06 | Luis Carlos Pedraza | Alta |
+| Story | Ver reportes de citas | EP-06 | Luis Carlos Pedraza | Media |
+| Epic | CI/CD y calidad | - | Equipo | Media |
+| Technical Story | Pipeline de GitHub Actions | EP-07 | Nicolas Gonzalez | Alta |
+| Technical Story | Pruebas unitarias y widget | EP-07 | Nicolas Gonzalez | Alta |
+| Technical Story | Generación de APK firmada | EP-07 | Nicolas Gonzalez | Alta |
+| Technical Story | Documentación técnica final | EP-07 | Luis Carlos Pedraza | Media |
+
+---
+
+## 7. Matriz de Asignación de Tareas
 
 ### Resumen por Desarrollador
 
@@ -375,7 +436,7 @@ Este documento conserva la vista ejecutiva del proyecto, pero además desglosa c
 
 ---
 
-## 7. Definición de Terminado
+## 8. Definición de Terminado
 
 Una tarea se considera **COMPLETADA** cuando:
 
