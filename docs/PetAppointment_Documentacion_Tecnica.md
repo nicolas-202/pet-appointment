@@ -546,6 +546,8 @@ La jerarquía recomendada en Jira para este proyecto es:
 
 Cuando una tarea no está ligada directamente a una HU funcional (por ejemplo CI/CD, configuración base o documentación técnica), se crea una **Historia Técnica (HT)** bajo la épica correspondiente.
 
+Este documento conserva una vista resumida de las tareas. Para el desglose completo por sprint, semanas, responsables y subtareas ampliadas, consulta [05-epicas-historias-y-tareas-tecnicas-plan-sprints.md](secciones/05-epicas-historias-y-tareas-tecnicas-plan-sprints.md).
+
 | ID | Tarea Técnica | HU/HT asociada | Épica | Estimación |
 |---|---|---|---|---|
 | TASK-01 | Configurar proyecto Flutter con estructura de carpetas por features | HT-01 (Base del proyecto) | EP-07 | 4h |
@@ -1646,6 +1648,8 @@ create policy "Admins ven todo"
 Duración sugerida por sprint: **2 semanas**.
 
 Capacidad estimada: **80 horas por sprint** (40h por desarrollador).
+
+Para la versión operativa y detallada del plan, con contexto por HU, desgloses de tareas y distribución por semanas, ver [05-epicas-historias-y-tareas-tecnicas-plan-sprints.md](secciones/05-epicas-historias-y-tareas-tecnicas-plan-sprints.md).
 
 | Sprint | Objetivo | Alcance principal | Responsable Dev 1 | Responsable Dev 2 | Entregables |
 |---|---|---|---|---|---|
