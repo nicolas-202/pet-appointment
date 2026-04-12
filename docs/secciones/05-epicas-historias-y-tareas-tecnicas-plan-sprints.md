@@ -1,10 +1,12 @@
 # 📋 Épicas, Historias de Usuario, Tareas Técnicas y Plan de Sprints
 
-**Documento:** Plan detallado de desarrollo PetAppointment  
-**Versión:** 1.0  
-**Fecha de creación:** 12 de abril de 2026  
-**Equipo:** 2 desarrolladores (Luis Carlos Pedraza, Nicolas Gonzalez)  
+**Documento:** Plan detallado de desarrollo PetAppointment
+**Versión:** 1.0
+**Fecha de creación:** 12 de abril de 2026
+**Equipo:** 2 desarrolladores (Luis Carlos Pedraza, Nicolas Gonzalez)
 **Duración de sprint:** 2 semanas
+
+Este documento conserva la vista ejecutiva del proyecto, pero además desglosa cada historia de usuario en contexto, dependencias y tareas técnicas más pequeñas para usarla como base directa en Jira.
 
 ---
 
@@ -14,8 +16,9 @@
 2. [Épicas del Proyecto](#épicas-del-proyecto)
 3. [Historias de Usuario (HU)](#historias-de-usuario)
 4. [Tareas Técnicas (TASK) por Sprint](#tareas-técnicas-por-sprint)
-5. [Matriz de Asignación de Tareas](#matriz-de-asignación-de-tareas)
-6. [Definición de Terminado](#definición-de-terminado)
+5. [Desglose ampliado de HU y tareas](#desglose-ampliado-de-hu-y-tareas)
+6. [Matriz de Asignación de Tareas](#matriz-de-asignación-de-tareas)
+7. [Definición de Terminado](#definición-de-terminado)
 
 ---
 
@@ -23,31 +26,38 @@
 
 ### Calendario de Entregas
 
-| Sprint | Objetivo Principal | Inicio | Fin | Duración días laborales | Capacidad total | Por Dev |
-|--------|---|---|---|---|---|---|
-| **Sprint 1** ✅ | Base, documentación y bosquejos | 27 mar | 14 abr | 11 días | 80h | 40h c/u |
-| **Sprint 2** (Próximo) | Auth + CRUD mascotas | 15 abr | 28 abr | 10 días | 80h | 40h c/u |
-| **Sprint 3** | Citas + Panel profesional | 29 abr | 12 may | 10 días | 80h | 40h c/u |
-| **Sprint 4** | Admin + Notificaciones + CI/CD | 13 may | 26 may | 10 días | 80h | 40h c/u |
+| Sprint                        | Objetivo Principal               | Inicio | Fin    | Duración días laborales | Capacidad total | Por Dev |
+| ----------------------------- | -------------------------------- | ------ | ------ | ------------------------- | --------------- | ------- |
+| **Sprint 1** ✅         | Base, documentación y bosquejos | 27 mar | 14 abr | 11 días                  | 80h             | 40h c/u |
+| **Sprint 2** (Próximo) | Auth + CRUD mascotas             | 15 abr | 28 abr | 10 días                  | 80h             | 40h c/u |
+| **Sprint 3**            | Citas + Panel profesional        | 29 abr | 12 may | 10 días                  | 80h             | 40h c/u |
+| **Sprint 4**            | Admin + Notificaciones + CI/CD   | 13 may | 26 may | 10 días                  | 80h             | 40h c/u |
 
 ### Sprint 1 (Completado) — Preparación y Base ✅
 
-**Período:** 27 de marzo — 14 de abril de 2026  
-**Objetivo:** Establecer infraestructura, documentación base y aprobar Entrega 1  
+**Período:** 27 de marzo — 14 de abril de 2026
+**Objetivo:** Establecer infraestructura, documentación base y aprobar Entrega 1
 **Estado:** ✅ COMPLETADO
 
-| Tarea | Responsable | Horas | Estado |
-|---|---|---|---|
-| Crear repositorio GitHub + ramas (master, qa, staging) | Nicolas Gonzalez | 4h | ✅ Hecho |
-| Configurar Jira con épicas, historias y tareas | Luis Carlos Pedraza | 6h | ✅ Hecho |
-| Redactar documentación técnica base | Luis Carlos Pedraza | 8h | ✅ Hecho |
-| Crear estructura inicial proyecto Flutter | Nicolas Gonzalez | 4h | ✅ Hecho |
-| Diseño de bosquejo (wireframes 4 pantallas) | Luis Carlos Pedraza | 5h | ✅ Hecho |
-| Capturar evidencias (GitHub, Jira, bosquejo) | Luis Carlos Pedraza | 3h | ✅ Hecho |
-| Generar PDF Entrega 1 | Luis Carlos Pedraza | 2h | ✅ Hecho |
-| Revisión final y push a develop | Nicolas Gonzalez | 2h | ✅ Hecho |
+**Distribución por semanas:**
 
-**Entregables:** 
+- **Semana 1:** 27 mar — 2 abr
+- **Semana 2:** 3 abr — 9 abr
+- **Semana 3:** 10 abr — 14 abr
+
+| Tarea                                                  | Responsable         | Horas | Estado   |
+| ------------------------------------------------------ | ------------------- | ----- | -------- |
+| Crear repositorio GitHub + ramas (master, qa, staging) | Nicolas Gonzalez    | 4h    | ✅ Hecho |
+| Configurar Jira con épicas, historias y tareas        | Luis Carlos Pedraza | 6h    | ✅ Hecho |
+| Redactar documentación técnica base                  | Luis Carlos Pedraza | 8h    | ✅ Hecho |
+| Crear estructura inicial proyecto Flutter              | Nicolas Gonzalez    | 4h    | ✅ Hecho |
+| Diseño de bosquejo (wireframes 4 pantallas)           | Luis Carlos Pedraza | 5h    | ✅ Hecho |
+| Capturar evidencias (GitHub, Jira, bosquejo)           | Luis Carlos Pedraza | 3h    | ✅ Hecho |
+| Generar PDF Entrega 1                                  | Luis Carlos Pedraza | 2h    | ✅ Hecho |
+| Revisión final y push a develop                       | Nicolas Gonzalez    | 2h    | ✅ Hecho |
+
+**Entregables:**
+
 - ✅ Repositorio operativo en GitHub con 3 ramas oficiales
 - ✅ Tablero Jira con 7 épicas, 24 historias, 22 tareas técnicas
 - ✅ Documentación técnica completa (PetAppointment_Documentacion_Tecnica.md)
@@ -58,60 +68,75 @@
 
 ### Sprint 2 (Próximo) — Autenticación y Gestión de Mascotas
 
-**Período:** 15 de abril — 28 de abril de 2026 (10 días laborales)  
-**Objetivo:** Implementar login/registro y módulo de mascotas funcional  
+**Período:** 15 de abril — 28 de abril de 2026 (10 días laborales)
+**Objetivo:** Implementar login/registro y módulo de mascotas funcional
 **Épicas incluidas:** EP-01 (Autenticación), EP-02 (Mascotas)
+
+**Distribución por semanas:**
+
+- **Semana 1:** 15 abr — 21 abr
+- **Semana 2:** 22 abr — 28 abr
 
 #### Asignaciones Sprint 2
 
-| Dev | Responsabilidades | Horas disponibles |
-|---|---|---|
-| **Luis Carlos Pedraza** | Módulo de mascotas (CRUD) + Datos persistencia | 40h |
-| **Nicolas Gonzalez** | Autenticación + Navegación por rol | 40h |
+| Dev                           | Responsabilidades                               | Horas disponibles |
+| ----------------------------- | ----------------------------------------------- | ----------------- |
+| **Luis Carlos Pedraza** | Módulo de mascotas (CRUD) + Datos persistencia | 40h               |
+| **Nicolas Gonzalez**    | Autenticación + Navegación por rol            | 40h               |
 
 ---
 
 ### Sprint 3 (Futuro) — Núcleo de Citas
 
-**Período:** 29 de abril — 12 de mayo de 2026 (10 días laborales)  
-**Objetivo:** Implementar flujo completo de reserva de citas y panel profesional  
+**Período:** 29 de abril — 12 de mayo de 2026 (10 días laborales)
+**Objetivo:** Implementar flujo completo de reserva de citas y panel profesional
 **Épicas incluidas:** EP-03 (Reserva/Gestión de Citas), EP-04 (Panel Profesional)
+
+**Distribución por semanas:**
+
+- **Semana 1:** 29 abr — 5 may
+- **Semana 2:** 6 may — 12 may
 
 #### Asignaciones Sprint 3
 
-| Dev | Responsabilidades | Horas disponibles |
-|---|---|---|
-| **Nicolas Gonzalez** | Calendario + lógica de reserva de citas | 40h |
-| **Luis Carlos Pedraza** | Panel profesional + gestión de estados | 40h |
+| Dev                           | Responsabilidades                        | Horas disponibles |
+| ----------------------------- | ---------------------------------------- | ----------------- |
+| **Nicolas Gonzalez**    | Calendario + lógica de reserva de citas | 40h               |
+| **Luis Carlos Pedraza** | Panel profesional + gestión de estados  | 40h               |
 
 ---
 
 ### Sprint 4 (Futuro) — Finalización, Notificaciones y Release
 
-**Período:** 13 de mayo — 26 de mayo de 2026 (10 días laborales)  
-**Objetivo:** Implementar notificaciones, panel admin, CI/CD y generar APK de release  
+**Período:** 13 de mayo — 26 de mayo de 2026 (10 días laborales)
+**Objetivo:** Implementar notificaciones, panel admin, CI/CD y generar APK de release
 **Épicas incluidas:** EP-05 (Notificaciones), EP-06 (Admin), EP-07 (CI/CD)
+
+**Distribución por semanas:**
+
+- **Semana 1:** 13 may — 19 may
+- **Semana 2:** 20 may — 26 may
 
 #### Asignaciones Sprint 4
 
-| Dev | Responsabilidades | Horas disponibles |
-|---|---|---|
-| **Luis Carlos Pedraza** | Panel admin + notificaciones locales | 40h |
-| **Nicolas Gonzalez** | CI/CD pipeline + Edge Functions + APK release | 40h |
+| Dev                           | Responsabilidades                             | Horas disponibles |
+| ----------------------------- | --------------------------------------------- | ----------------- |
+| **Luis Carlos Pedraza** | Panel admin + notificaciones locales          | 40h               |
+| **Nicolas Gonzalez**    | CI/CD pipeline + Edge Functions + APK release | 40h               |
 
 ---
 
 ## Épicas del Proyecto
 
-| ID | Épica | Descripción | Prioridad | Sprint planeado |
-|---|---|---|---|---|
-| **EP-01** | Autenticación y Gestión de Usuarios | Registro, login, recuperación de contraseña, gestión de perfiles por rol | **Alta** | Sprint 2 |
-| **EP-02** | Gestión de Mascotas | CRUD completo de mascotas del cliente | **Alta** | Sprint 2 |
-| **EP-03** | Reserva y Gestión de Citas | Flujo completo: crear, modificar, cancelar citas con calendario | **Alta** | Sprint 3 |
-| **EP-04** | Panel del Profesional | Agenda visual, cambio de estados, configuración de disponibilidad | **Alta** | Sprint 3 |
-| **EP-05** | Notificaciones y Tiempo Real | Sincronización RT, notificaciones locales, recordatorios automáticos | **Media** | Sprint 4 |
-| **EP-06** | Panel de Administración | Gestión de servicios, horarios, usuarios y reportes básicos | **Media** | Sprint 4 |
-| **EP-07** | CI/CD y Calidad | Pipeline GitHub Actions, pruebas, generación de APK | **Media** | Sprint 4 |
+| ID              | Épica                                | Descripción                                                                | Prioridad       | Sprint planeado |
+| --------------- | ------------------------------------- | --------------------------------------------------------------------------- | --------------- | --------------- |
+| **EP-01** | Autenticación y Gestión de Usuarios | Registro, login, recuperación de contraseña, gestión de perfiles por rol | **Alta**  | Sprint 2        |
+| **EP-02** | Gestión de Mascotas                  | CRUD completo de mascotas del cliente                                       | **Alta**  | Sprint 2        |
+| **EP-03** | Reserva y Gestión de Citas           | Flujo completo: crear, modificar, cancelar citas con calendario             | **Alta**  | Sprint 3        |
+| **EP-04** | Panel del Profesional                 | Agenda visual, cambio de estados, configuración de disponibilidad          | **Alta**  | Sprint 3        |
+| **EP-05** | Notificaciones y Tiempo Real          | Sincronización RT, notificaciones locales, recordatorios automáticos      | **Media** | Sprint 4        |
+| **EP-06** | Panel de Administración              | Gestión de servicios, horarios, usuarios y reportes básicos               | **Media** | Sprint 4        |
+| **EP-07** | CI/CD y Calidad                       | Pipeline GitHub Actions, pruebas, generación de APK                        | **Media** | Sprint 4        |
 
 ---
 
@@ -119,57 +144,57 @@
 
 ### Épica EP-01: Autenticación y Gestión de Usuarios
 
-| ID | Historia | Criterios de Aceptación | Story Points | Sprint |
-|---|---|---|---|---|
-| **US-01** | Como usuario nuevo, quiero registrarme con correo y contraseña | Formulario con validación, confirmación email, rol asignado | 3 | Sprint 2 |
-| **US-02** | Como usuario registrado, quiero iniciar sesión seguramente | Auth vía Supabase, JWT token, manejo de errores | 2 | Sprint 2 |
-| **US-03** | Como usuario, quiero recuperar contraseña olvidada | Email de recuperación, enlace funcional, nueva contraseña | 2 | Sprint 2 |
-| **US-04** | Como usuario, quiero editar mi perfil | Formulario editable, actualización en DB, confirmación | 3 | Sprint 2 |
-| **US-05** | Como admin, quiero ver usuarios registrados | Tabla paginada, filtro por rol, cambiar rol | 5 | Sprint 4 |
+| ID              | Historia                                                        | Criterios de Aceptación                                      | Story Points | Sprint   |
+| --------------- | --------------------------------------------------------------- | ------------------------------------------------------------- | ------------ | -------- |
+| **US-01** | Como usuario nuevo, quiero registrarme con correo y contraseña | Formulario con validación, confirmación email, rol asignado | 3            | Sprint 2 |
+| **US-02** | Como usuario registrado, quiero iniciar sesión seguramente     | Auth vía Supabase, JWT token, manejo de errores              | 2            | Sprint 2 |
+| **US-03** | Como usuario, quiero recuperar contraseña olvidada             | Email de recuperación, enlace funcional, nueva contraseña   | 2            | Sprint 2 |
+| **US-04** | Como usuario, quiero editar mi perfil                           | Formulario editable, actualización en DB, confirmación      | 3            | Sprint 2 |
+| **US-05** | Como admin, quiero ver usuarios registrados                     | Tabla paginada, filtro por rol, cambiar rol                   | 5            | Sprint 4 |
 
 ### Épica EP-02: Gestión de Mascotas
 
-| ID | Historia | Criterios de Aceptación | Story Points | Sprint |
-|---|---|---|---|---|
-| **US-06** | Como cliente, quiero registrar mis mascotas | Formulario validado, foto opcional, guardado en DB | 3 | Sprint 2 |
-| **US-07** | Como cliente, quiero ver mis mascotas registradas | Lista con foto y datos, indicador última cita | 2 | Sprint 2 |
-| **US-08** | Como cliente, quiero editar mascota | Formulario prellenado, actualización, confirmación | 2 | Sprint 2 |
-| **US-09** | Como cliente, quiero eliminar mascota | Confirmación, verificar citas activas asociadas | 2 | Sprint 2 |
+| ID              | Historia                                          | Criterios de Aceptación                             | Story Points | Sprint   |
+| --------------- | ------------------------------------------------- | ---------------------------------------------------- | ------------ | -------- |
+| **US-06** | Como cliente, quiero registrar mis mascotas       | Formulario validado, foto opcional, guardado en DB   | 3            | Sprint 2 |
+| **US-07** | Como cliente, quiero ver mis mascotas registradas | Lista con foto y datos, indicador última cita       | 2            | Sprint 2 |
+| **US-08** | Como cliente, quiero editar mascota               | Formulario prellenado, actualización, confirmación | 2            | Sprint 2 |
+| **US-09** | Como cliente, quiero eliminar mascota             | Confirmación, verificar citas activas asociadas     | 2            | Sprint 2 |
 
 ### Épica EP-03: Reserva y Gestión de Citas
 
-| ID | Historia | Criterios de Aceptación | Story Points | Sprint |
-|---|---|---|---|---|
-| **US-10** | Como cliente, quiero ver calendario con disponibilidad | Calendario interactivo, slots libres/ocupados, RT sync | 8 | Sprint 3 |
-| **US-11** | Como cliente, quiero reservar cita | Flujo en pasos, validación disponibilidad, estado "En espera" | 8 | Sprint 3 |
-| **US-12** | Como cliente, quiero confirmación inmediata | Pantalla de éxito, resumen, notificación local | 3 | Sprint 3 |
-| **US-13** | Como cliente, quiero ver historial de citas | Lista ordenada por fecha, estado, detalles al pulsar | 3 | Sprint 3 |
-| **US-14** | Como cliente, quiero cancelar cita | Confirmación, estado actualizado, slot liberado | 5 | Sprint 3 |
-| **US-15** | Como cliente, quiero reprogramar cita | Nuevo slot, cancelación anterior, nueva cita creada | 5 | Sprint 3 |
+| ID              | Historia                                               | Criterios de Aceptación                                       | Story Points | Sprint   |
+| --------------- | ------------------------------------------------------ | -------------------------------------------------------------- | ------------ | -------- |
+| **US-10** | Como cliente, quiero ver calendario con disponibilidad | Calendario interactivo, slots libres/ocupados, RT sync         | 8            | Sprint 3 |
+| **US-11** | Como cliente, quiero reservar cita                     | Flujo en pasos, validación disponibilidad, estado "En espera" | 8            | Sprint 3 |
+| **US-12** | Como cliente, quiero confirmación inmediata           | Pantalla de éxito, resumen, notificación local               | 3            | Sprint 3 |
+| **US-13** | Como cliente, quiero ver historial de citas            | Lista ordenada por fecha, estado, detalles al pulsar           | 3            | Sprint 3 |
+| **US-14** | Como cliente, quiero cancelar cita                     | Confirmación, estado actualizado, slot liberado               | 5            | Sprint 3 |
+| **US-15** | Como cliente, quiero reprogramar cita                  | Nuevo slot, cancelación anterior, nueva cita creada           | 5            | Sprint 3 |
 
 ### Épica EP-04: Panel del Profesional
 
-| ID | Historia | Criterios de Aceptación | Story Points | Sprint |
-|---|---|---|---|---|
-| **US-16** | Como profesional, quiero ver mi agenda | Vista diaria/semanal, datos cliente y mascota | 5 | Sprint 3 |
-| **US-17** | Como profesional, quiero confirmar cita pendiente | Botón confirmación, cambio estado, notificación cliente | 3 | Sprint 3 |
-| **US-18** | Como profesional, quiero actualizar estado de cita | Selector estado, transiciones válidas, RT sync | 5 | Sprint 3 |
-| **US-19** | Como profesional, quiero configurar disponibilidad | Selector días/horas, persistencia, reflejo en cliente | 8 | Sprint 3 |
+| ID              | Historia                                           | Criterios de Aceptación                                   | Story Points | Sprint   |
+| --------------- | -------------------------------------------------- | ---------------------------------------------------------- | ------------ | -------- |
+| **US-16** | Como profesional, quiero ver mi agenda             | Vista diaria/semanal, datos cliente y mascota              | 5            | Sprint 3 |
+| **US-17** | Como profesional, quiero confirmar cita pendiente  | Botón confirmación, cambio estado, notificación cliente | 3            | Sprint 3 |
+| **US-18** | Como profesional, quiero actualizar estado de cita | Selector estado, transiciones válidas, RT sync            | 5            | Sprint 3 |
+| **US-19** | Como profesional, quiero configurar disponibilidad | Selector días/horas, persistencia, reflejo en cliente     | 8            | Sprint 3 |
 
 ### Épica EP-05: Notificaciones y Tiempo Real
 
-| ID | Historia | Criterios de Aceptación | Story Points | Sprint |
-|---|---|---|---|---|
-| **US-20** | Como cliente, quiero notificación al cambiar estado cita | Notificación local al detectar cambio vía RT | 5 | Sprint 4 |
-| **US-21** | Como cliente, quiero recordatorio 24h antes | Notificación programada, Edge Function o local | 5 | Sprint 4 |
-| **US-22** | Como profesional, quiero notificación nueva cita | Push en tiempo real vía Realtime | 3 | Sprint 4 |
+| ID              | Historia                                                  | Criterios de Aceptación                        | Story Points | Sprint   |
+| --------------- | --------------------------------------------------------- | ----------------------------------------------- | ------------ | -------- |
+| **US-20** | Como cliente, quiero notificación al cambiar estado cita | Notificación local al detectar cambio vía RT  | 5            | Sprint 4 |
+| **US-21** | Como cliente, quiero recordatorio 24h antes               | Notificación programada, Edge Function o local | 5            | Sprint 4 |
+| **US-22** | Como profesional, quiero notificación nueva cita         | Push en tiempo real vía Realtime               | 3            | Sprint 4 |
 
 ### Épica EP-06: Panel de Administración
 
-| ID | Historia | Criterios de Aceptación | Story Points | Sprint |
-|---|---|---|---|---|
-| **US-23** | Como admin, quiero gestionar servicios | CRUD servicios, activar/desactivar sin eliminar | 5 | Sprint 4 |
-| **US-24** | Como admin, quiero ver reportes de citas | Listado filtrable por fecha/estado, contadores | 8 | Sprint 4 |
+| ID              | Historia                                 | Criterios de Aceptación                        | Story Points | Sprint   |
+| --------------- | ---------------------------------------- | ----------------------------------------------- | ------------ | -------- |
+| **US-23** | Como admin, quiero gestionar servicios   | CRUD servicios, activar/desactivar sin eliminar | 5            | Sprint 4 |
+| **US-24** | Como admin, quiero ver reportes de citas | Listado filtrable por fecha/estado, contadores  | 8            | Sprint 4 |
 
 ---
 
@@ -179,26 +204,26 @@
 
 #### Asignado a **Nicolas Gonzalez** — Autenticación (20h)
 
-| TASK ID | Tarea | Horas | Enlace HU |
-|---|---|---|---|
-| **TASK-05** | Integrar supabase_flutter y configurar cliente global | 2h | US-02 |
-| **TASK-06P1** | Implementar pantalla de registro con validaciones | 5h | US-01 |
-| **TASK-06P2** | Implementar pantalla de login con JWT y token refresh | 4h | US-02 |
-| **TASK-06P3** | Implementar pantalla de recuperación de contraseña | 3h | US-03 |
-| **TASK-07** | Implementar navegación por rol con Go Router | 4h | US-05 |
-| **TASK-04P1** | Configurar RLS policies para auth y users | 2h | US-05 |
+| TASK ID             | Tarea                                                 | Horas | Enlace HU |
+| ------------------- | ----------------------------------------------------- | ----- | --------- |
+| **TASK-05**   | Integrar supabase_flutter y configurar cliente global | 2h    | US-02     |
+| **TASK-06P1** | Implementar pantalla de registro con validaciones     | 5h    | US-01     |
+| **TASK-06P2** | Implementar pantalla de login con JWT y token refresh | 4h    | US-02     |
+| **TASK-06P3** | Implementar pantalla de recuperación de contraseña  | 3h    | US-03     |
+| **TASK-07**   | Implementar navegación por rol con Go Router         | 4h    | US-05     |
+| **TASK-04P1** | Configurar RLS policies para auth y users             | 2h    | US-05     |
 
 #### Asignado a **Luis Carlos Pedraza** — Mascotas (20h)
 
-| TASK ID | Tarea | Horas | Enlace HU |
-|---|---|---|---|
-| **TASK-02P1** | Configurar proyecto Supabase (Auth, DB, Realtime, Storage) | 3h | HT-02 |
-| **TASK-03** | Definir esquema BD y ejecutar migrations | 6h | HT-03 |
-| **TASK-04P2** | Implementar RLS policies para pets y citas | 4h | HT-04 |
-| **TASK-08P1** | Desarrollar pantalla de registro de mascotas (CREATE) | 3h | US-06 |
-| **TASK-08P2** | Desarrollar pantalla de listado de mascotas (READ) | 2h | US-07 |
-| **TASK-08P3** | Desarrollar pantalla de edición de mascotas (UPDATE) | 1h | US-08 |
-| **TASK-08P4** | Implementar botón eliminar con confirmación (DELETE) | 1h | US-09 |
+| TASK ID             | Tarea                                                      | Horas | Enlace HU |
+| ------------------- | ---------------------------------------------------------- | ----- | --------- |
+| **TASK-02P1** | Configurar proyecto Supabase (Auth, DB, Realtime, Storage) | 3h    | HT-02     |
+| **TASK-03**   | Definir esquema BD y ejecutar migrations                   | 6h    | HT-03     |
+| **TASK-04P2** | Implementar RLS policies para pets y citas                 | 4h    | HT-04     |
+| **TASK-08P1** | Desarrollar pantalla de registro de mascotas (CREATE)      | 3h    | US-06     |
+| **TASK-08P2** | Desarrollar pantalla de listado de mascotas (READ)         | 2h    | US-07     |
+| **TASK-08P3** | Desarrollar pantalla de edición de mascotas (UPDATE)      | 1h    | US-08     |
+| **TASK-08P4** | Implementar botón eliminar con confirmación (DELETE)     | 1h    | US-09     |
 
 ---
 
@@ -206,23 +231,23 @@
 
 #### Asignado a **Nicolas Gonzalez** — Calendario y Reservas (22h)
 
-| TASK ID | Tarea | Horas | Enlace HU |
-|---|---|---|---|
-| **TASK-09** | Integrar table_calendar para disponibilidad | 8h | US-10 |
-| **TASK-10P1** | Implementar lógica de reserva con validación | 6h | US-11 |
-| **TASK-10P2** | Implementar pantalla de confirmación de cita | 3h | US-12 |
-| **TASK-14** | Integrar flutter_local_notifications | 2h | US-21 |
-| **TASK-11P1** | Implementar suscripción Realtime para slots | 3h | US-22 |
+| TASK ID             | Tarea                                          | Horas | Enlace HU |
+| ------------------- | ---------------------------------------------- | ----- | --------- |
+| **TASK-09**   | Integrar table_calendar para disponibilidad    | 8h    | US-10     |
+| **TASK-10P1** | Implementar lógica de reserva con validación | 6h    | US-11     |
+| **TASK-10P2** | Implementar pantalla de confirmación de cita  | 3h    | US-12     |
+| **TASK-14**   | Integrar flutter_local_notifications           | 2h    | US-21     |
+| **TASK-11P1** | Implementar suscripción Realtime para slots   | 3h    | US-22     |
 
 #### Asignado a **Luis Carlos Pedraza** — Panel Profesional (18h)
 
-| TASK ID | Tarea | Horas | Enlace HU |
-|---|---|---|---|
-| **TASK-12P1** | Desarrollar panel profesional - vista agenda diaria/semanal | 6h | US-16 |
-| **TASK-12P2** | Implementar confirmación de cita pendiente | 3h | US-17 |
-| **TASK-13P1** | Implementar cambio de estado de cita con historial | 6h | US-18 |
-| **TASK-19P1** | Configurar GitHub Actions para tests básicos | 2h | HT-07 |
-| **TASK-13P2** | Implementar pruebas unitarias CRUD mascotas | 1h | HT-07 |
+| TASK ID             | Tarea                                                       | Horas | Enlace HU |
+| ------------------- | ----------------------------------------------------------- | ----- | --------- |
+| **TASK-12P1** | Desarrollar panel profesional - vista agenda diaria/semanal | 6h    | US-16     |
+| **TASK-12P2** | Implementar confirmación de cita pendiente                 | 3h    | US-17     |
+| **TASK-13P1** | Implementar cambio de estado de cita con historial          | 6h    | US-18     |
+| **TASK-19P1** | Configurar GitHub Actions para tests básicos               | 2h    | HT-07     |
+| **TASK-13P2** | Implementar pruebas unitarias CRUD mascotas                 | 1h    | HT-07     |
 
 ---
 
@@ -230,59 +255,132 @@
 
 #### Asignado a **Luis Carlos Pedraza** — Admin y Notificaciones (20h)
 
-| TASK ID | Tarea | Horas | Enlace HU |
-|---|---|---|---|
-| **TASK-17P1** | Desarrollar panel admin - gestión de servicios | 8h | US-23 |
-| **TASK-17P2** | Desarrollar panel admin - gestión de usuarios | 4h | US-05 |
-| **TASK-17P3** | Desarrollar panel admin - reportes básicos | 4h | US-24 |
-| **TASK-15** | Crear Edge Function para recordatorios automáticos | 4h | US-21 |
+| TASK ID             | Tarea                                               | Horas | Enlace HU |
+| ------------------- | --------------------------------------------------- | ----- | --------- |
+| **TASK-17P1** | Desarrollar panel admin - gestión de servicios     | 8h    | US-23     |
+| **TASK-17P2** | Desarrollar panel admin - gestión de usuarios      | 4h    | US-05     |
+| **TASK-17P3** | Desarrollar panel admin - reportes básicos         | 4h    | US-24     |
+| **TASK-15**   | Crear Edge Function para recordatorios automáticos | 4h    | US-21     |
 
 #### Asignado a **Nicolas Gonzalez** — CI/CD y Release (20h)
 
-| TASK ID | Tarea | Horas | Enlace HU |
-|---|---|---|---|
-| **TASK-11P2** | Implementar suscripción Realtime para citas | 5h | US-20, US-22 |
-| **TASK-18** | Configurar GitHub Actions para build de APK | 4h | HT-06 |
-| **TASK-19P2** | Configurar GitHub Actions para tests e integración | 3h | HT-07 |
-| **TASK-20** | Escribir pruebas unitarias y de widget (60% cobertura) | 5h | HT-07 |
-| **TASK-21** | Generar keystore y firmar APK para release | 2h | HT-08 |
-| **TASK-22** | Documentar API de Supabase y funciones edge | 1h | HT-09 |
+| TASK ID             | Tarea                                                  | Horas | Enlace HU    |
+| ------------------- | ------------------------------------------------------ | ----- | ------------ |
+| **TASK-11P2** | Implementar suscripción Realtime para citas           | 5h    | US-20, US-22 |
+| **TASK-18**   | Configurar GitHub Actions para build de APK            | 4h    | HT-06        |
+| **TASK-19P2** | Configurar GitHub Actions para tests e integración    | 3h    | HT-07        |
+| **TASK-20**   | Escribir pruebas unitarias y de widget (60% cobertura) | 5h    | HT-07        |
+| **TASK-21**   | Generar keystore y firmar APK para release             | 2h    | HT-08        |
+| **TASK-22**   | Documentar API de Supabase y funciones edge            | 1h    | HT-09        |
 
 ---
 
-## Matriz de Asignación de Tareas
+## 5.4 Desglose ampliado de HU y tareas
+
+### EP-01: Autenticación y Gestión de Usuarios
+
+| HU | Contexto funcional | Desglose de tareas técnicas | Responsable principal | Sprint |
+|---|---|---|---|---|
+| **US-01** | Alta de usuario con validación de acceso inicial. | Diseñar formulario; validar correo y contraseña; conectar Supabase Auth; mostrar confirmación. | Nicolas Gonzalez | Sprint 2 |
+| **US-02** | Inicio de sesión seguro y persistencia de sesión. | Crear pantalla login; guardar sesión JWT; manejar errores; cerrar sesión. | Nicolas Gonzalez | Sprint 2 |
+| **US-03** | Recuperación de contraseña para evitar bloqueo de acceso. | Crear vista de recuperación; enviar correo; validar enlace; reintento de acceso. | Nicolas Gonzalez | Sprint 2 |
+| **US-04** | Perfil editable con datos personales del usuario. | Pantalla perfil; lectura y edición de datos; avatar opcional; confirmación de guardado. | Luis Carlos Pedraza | Sprint 2 |
+| **US-05** | Gestión administrativa de usuarios y roles. | Listado paginado; filtro por rol; cambio de rol; bloqueo o desbloqueo de cuentas. | Luis Carlos Pedraza | Sprint 4 |
+
+### EP-02: Gestión de Mascotas
+
+| HU | Contexto funcional | Desglose de tareas técnicas | Responsable principal | Sprint |
+|---|---|---|---|---|
+| **US-06** | Registro de mascotas para asociarlas a citas. | Formulario CREATE; validaciones; guardar en Supabase; foto opcional. | Luis Carlos Pedraza | Sprint 2 |
+| **US-07** | Listado de mascotas para selección rápida. | Tarjetas/lista; estado vacío; última cita; navegación al detalle. | Luis Carlos Pedraza | Sprint 2 |
+| **US-08** | Edición de datos de mascota ya registrada. | Formulario prellenado; actualización en DB; control de cambios; feedback visual. | Luis Carlos Pedraza | Sprint 2 |
+| **US-09** | Eliminación controlada de mascotas del perfil. | Confirmación; verificar citas activas; eliminación lógica o física; refresco de lista. | Luis Carlos Pedraza | Sprint 2 |
+
+### EP-03: Reserva y Gestión de Citas
+
+| HU | Contexto funcional | Desglose de tareas técnicas | Responsable principal | Sprint |
+|---|---|---|---|---|
+| **US-10** | Calendario de disponibilidad para ver horarios libres. | Integrar widget calendario; consultar slots; leyenda de estados; filtros por servicio. | Nicolas Gonzalez | Sprint 3 |
+| **US-11** | Reserva completa de una cita con validación de colisión. | Flujo en pasos; validar disponibilidad; registrar cita; bloquear slot. | Nicolas Gonzalez | Sprint 3 |
+| **US-12** | Confirmación inmediata después de reservar. | Pantalla de éxito; resumen de cita; navegación al historial; notificación local. | Nicolas Gonzalez | Sprint 3 |
+| **US-13** | Historial de citas pasadas y futuras. | Consulta por usuario; tabs por estado; detalle expandible; paginación. | Nicolas Gonzalez | Sprint 3 |
+| **US-14** | Cancelación de cita con liberación de horario. | Diálogo de cancelación; cambiar estado; liberar slot; registrar auditoría. | Luis Carlos Pedraza | Sprint 3 |
+| **US-15** | Reprogramación de cita sin perder trazabilidad. | Seleccionar nuevo slot; cancelar anterior; crear nueva cita; guardar historial. | Nicolas Gonzalez | Sprint 3 |
+
+### EP-04: Panel del Profesional
+
+| HU | Contexto funcional | Desglose de tareas técnicas | Responsable principal | Sprint |
+|---|---|---|---|---|
+| **US-16** | Agenda diaria y semanal para organización del profesional. | Vista calendario; tarjetas de citas; filtros por día o semana; estados vacíos. | Luis Carlos Pedraza | Sprint 3 |
+| **US-17** | Confirmación de citas pendientes por el profesional. | Botón de aprobar; actualizar estado; notificar al cliente; registrar cambio. | Luis Carlos Pedraza | Sprint 3 |
+| **US-18** | Cambio de estado de atención con historial. | Selector de estados; validar transiciones; escribir historial; sincronizar realtime. | Luis Carlos Pedraza | Sprint 3 |
+| **US-19** | Configuración de disponibilidad y horarios laborales. | Editor semanal; generar slots; validar cruces; guardar configuración. | Luis Carlos Pedraza | Sprint 3 |
+
+### EP-05: Notificaciones y Tiempo Real
+
+| HU | Contexto funcional | Desglose de tareas técnicas | Responsable principal | Sprint |
+|---|---|---|---|---|
+| **US-20** | Aviso cuando cambia el estado de la cita. | Suscripción realtime; mapear cambios; notificación local; marcar como leída. | Nicolas Gonzalez | Sprint 4 |
+| **US-21** | Recordatorio 24 horas antes de la cita. | Tarea programada; consulta de citas próximas; disparar notificación local; fallback. | Nicolas Gonzalez | Sprint 4 |
+| **US-22** | Aviso inmediato al profesional cuando entra una cita nueva. | Listener de eventos; badge en agenda; sonido o vibración; refresco automático. | Nicolas Gonzalez | Sprint 4 |
+
+### EP-06: Panel de Administración
+
+| HU | Contexto funcional | Desglose de tareas técnicas | Responsable principal | Sprint |
+|---|---|---|---|---|
+| **US-23** | CRUD de servicios ofrecidos por la clínica. | Formulario de servicio; lista; activar o desactivar; validaciones de precio y duración. | Luis Carlos Pedraza | Sprint 4 |
+| **US-24** | Reportes básicos de citas para seguimiento del negocio. | Filtros por fecha y estado; agregación; tablas; exportación de reporte. | Luis Carlos Pedraza | Sprint 4 |
+
+### EP-07: Historias Técnicas Transversales
+
+| HT | Contexto funcional | Desglose de tareas técnicas | Responsable principal | Sprint |
+|---|---|---|---|---|
+| **HT-01** | Base del proyecto y estructura de carpetas. | Configurar layout inicial; organizar features; theme; rutas base. | Nicolas Gonzalez | Sprint 1 |
+| **HT-02** | Infraestructura backend y conectividad. | Crear proyecto Supabase; variables de entorno; cliente compartido; conexión inicial. | Luis Carlos Pedraza | Sprint 1 / 2 |
+| **HT-03** | Modelo de datos y migraciones. | Crear tablas; relaciones; seeds; revisar integridad referencial. | Luis Carlos Pedraza | Sprint 1 / 2 |
+| **HT-04** | Seguridad y RLS. | Definir políticas; validar acceso por rol; pruebas de lectura y escritura. | Nicolas Gonzalez | Sprint 1 / 2 |
+| **HT-05** | Prototipo de notificaciones externas. | Diseñar integración; endpoint base; pruebas con proveedor externo. | Nicolas Gonzalez | Sprint 4 |
+| **HT-06** | Automatización de build y release. | GitHub Actions para build; firma APK; publicación de artefacto. | Nicolas Gonzalez | Sprint 4 |
+| **HT-07** | Calidad automatizada y pruebas. | Lint; tests unitarios y widget; reporte de cobertura; bloqueos de merge. | Nicolas Gonzalez | Sprint 4 |
+| **HT-08** | Release APK firmado. | Generar keystore; configurar signing; validar instalable. | Nicolas Gonzalez | Sprint 4 |
+| **HT-09** | Documentación técnica y soporte. | Documentar APIs; actualizar README; evidencias; checklist final. | Luis Carlos Pedraza | Sprint 4 |
+
+---
+
+## 6. Matriz de Asignación de Tareas
 
 ### Resumen por Desarrollador
 
 #### **Luis Carlos Pedraza** — Especialista en Backend + Admin UI
 
-**Fortalrezas:** Diseño UX/UI, backend de datos, lógica de negocio, documentación
+**Fortalezas:** Diseño UX/UI, backend de datos, lógica de negocio, documentación
 
-| Sprint | Tareas asignadas | Horas | Porcentaje |
-|---|---|---|---|
-| **Sprint 2** | Supabase setup, BD, mascotas CRUD | 20h | 50% |
-| **Sprint 3** | Panel profesional, cambio estados, testing | 18h | 45% |
-| **Sprint 4** | Admin panel, notificaciones edge | 20h | 50% |
-| **TOTAL** | - | **58h** | **~48%** |
+| Sprint             | Tareas asignadas                           | Horas         | Porcentaje     |
+| ------------------ | ------------------------------------------ | ------------- | -------------- |
+| **Sprint 2** | Supabase setup, BD, mascotas CRUD          | 20h           | 50%            |
+| **Sprint 3** | Panel profesional, cambio estados, testing | 18h           | 45%            |
+| **Sprint 4** | Admin panel, notificaciones edge           | 20h           | 50%            |
+| **TOTAL**    | -                                          | **58h** | **~48%** |
 
 #### **Nicolas Gonzalez** — Especialista en Frontend + CI/CD
 
 **Fortalezas:** Flutter front-end, autenticación, tiempo real, automatización
 
-| Sprint | Tareas asignadas | Horas | Porcentaje |
-|---|---|---|---|
-| **Sprint 2** | Auth completa (registro, login, recovery), Go Router | 20h | 50% |
-| **Sprint 3** | Calendario, reserva de citas, Realtime | 22h | 55% |
-| **Sprint 4** | CI/CD, APK release, testing e integración | 20h | 50% |
-| **TOTAL** | - | **62h** | **~52%** |
+| Sprint             | Tareas asignadas                                     | Horas         | Porcentaje     |
+| ------------------ | ---------------------------------------------------- | ------------- | -------------- |
+| **Sprint 2** | Auth completa (registro, login, recovery), Go Router | 20h           | 50%            |
+| **Sprint 3** | Calendario, reserva de citas, Realtime               | 22h           | 55%            |
+| **Sprint 4** | CI/CD, APK release, testing e integración           | 20h           | 50%            |
+| **TOTAL**    | -                                                    | **62h** | **~52%** |
 
 ---
 
-## Definición de Terminado
+## 7. Definición de Terminado
 
 Una tarea se considera **COMPLETADA** cuando:
 
 ✅ **Criterios funcionales:**
+
 1. Código implementado según especificación de la HU
 2. Cumple todos los criterios de aceptación
 3. Integración con Supabase (Auth, DB, Realtime) verificada
@@ -309,21 +407,22 @@ Una tarea se considera **COMPLETADA** cuando:
 ## Notas Importantes
 
 1. **Gestión de ramas:**
+
    - Feature branches: `feature/EP-XX-descripcion` (ej: `feature/EP-01-auth`)
    - Mergear a `develop` con pull request y revisión
    - `develop` → `staging` (qa) → `master` (producción)
-
 2. **Comunicación:**
+
    - Daily standup: 10:00 AM (breve: qué hiciste, qué harás, bloqueadores)
    - Sincronización en Jira al final de cada día
    - Issues/PRs con descripción clara y enlazada a Jira
-
 3. **Versioning:**
+
    - v0.1.x (Sprint 2): Auth + Mascotas
    - v0.2.x (Sprint 3): Citas
    - v1.0.0 (Sprint 4): Release inicial
-
 4. **Buffer y contingencias:**
+
    - 10-15% del tiempo reservado para bugs/issues no previstos
    - Si una tarea toma más tiempo, comunicar ASAP
    - Priorizar cierre de HU sobre perfeccionismo en código
@@ -339,6 +438,6 @@ Una tarea se considera **COMPLETADA** cuando:
 
 ---
 
-**Documento generado:** 12 de abril de 2026  
-**Próxima revisión:** 14 de abril de 2026 (fin Sprint 1)  
+**Documento generado:** 12 de abril de 2026
+**Próxima revisión:** 14 de abril de 2026 (fin Sprint 1)
 **Versión:** 1.0
