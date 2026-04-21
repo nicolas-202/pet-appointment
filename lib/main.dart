@@ -1,49 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:pet_appointment/widgets/widgets.dart';
-import 'package:pet_appointment/config/config.dart';
-import 'package:pet_appointment/screens/register_screen.dart';
-import 'package:pet_appointment/screens/login_screen.dart';
+
+import 'config/theme.dart';
+import 'widgets/app_shell.dart';
+import 'app/sprint2_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
-  await _initializeSupabase();
-  runApp(const MyApp());
+
+  try {
+    await dotenv.load(fileName: '.env.local');
+  } catch (error) {
+    debugPrint('No se pudo cargar .env.local: $error');
+  }
+
+  final isSupabaseReady = await initializeSupabase();
+  runApp(
+    isSupabaseReady
+        ? MaterialApp(
+            title: 'PetAppointment',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.light,
+            home: const AppShell(),
+          )
+        : const PetAppointmentApp(isSupabaseReady: false),
+  );
 }
 
-Future<void> _initializeSupabase() async {
-  final supabaseUrl = dotenv.maybeGet('SUPABASE_URL') ?? '';
-  final supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY') ?? '';
+Future<bool> initializeSupabase() async {
+  final defineSupabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  final defineSupabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+  final supabaseUrl = defineSupabaseUrl.isNotEmpty
+      ? defineSupabaseUrl
+      : dotenv.maybeGet('SUPABASE_URL') ?? '';
+  final supabaseAnonKey = defineSupabaseAnonKey.isNotEmpty
+      ? defineSupabaseAnonKey
+      : dotenv.maybeGet('SUPABASE_ANON_KEY') ?? '';
 
   if (supabaseUrl.isEmpty || supabaseAnonKey.isEmpty) {
     debugPrint(
-      'Supabase no configurado: asegúrate de que .env contiene SUPABASE_URL y SUPABASE_ANON_KEY.',
+      'Supabase no configurado: define SUPABASE_URL y SUPABASE_ANON_KEY en .env.local o con --dart-define-from-file=.env.local.',
     );
-    return;
+    return false;
   }
 
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PetAppointment',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      // Si no hay sesión activa → pantalla de registro, si hay → shell principal
-      // La app abre siempre en el home; el login se pide al usar funciones protegidas
-      home: const AppShell(),
-      routes: {
-        '/home': (_) => const AppShell(),
-        '/login': (_) => const LoginScreen(),
-        '/register': (_) => const RegisterScreen(),
-      },
-    );
-  }
+  return true;
 }

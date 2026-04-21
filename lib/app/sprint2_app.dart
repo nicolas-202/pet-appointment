@@ -39,7 +39,7 @@ class Sprint2HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Text(
-              'Este entrypoint reemplaza temporalmente el bosquejo para avanzar las historias de Sprint 2.',
+              'Pantalla de respaldo para validar configuración base cuando faltan variables de entorno.',
             ),
             const SizedBox(height: 24),
             Row(
@@ -53,7 +53,7 @@ class Sprint2HomeScreen extends StatelessWidget {
                   child: Text(
                     isSupabaseReady
                         ? 'Supabase configurado correctamente.'
-                        : 'Supabase no configurado. Define SUPABASE_URL y SUPABASE_ANON_KEY al ejecutar la app.',
+                        : 'Supabase no configurado. Ejecuta con --dart-define-from-file=.env.local o define SUPABASE_URL/SUPABASE_ANON_KEY.',
                   ),
                 ),
               ],

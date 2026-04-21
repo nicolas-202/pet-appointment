@@ -53,12 +53,19 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
           obscureText: _obscure,
           textInputAction: widget.textInputAction,
           validator: widget.validator,
+          autocorrect: false,
+          enableSuggestions: false,
           decoration: InputDecoration(
             hintText: '••••••••',
-            hintStyle: TextStyle(color: AppColors.outline.withValues(alpha: 0.5)),
+            hintStyle: TextStyle(
+              color: AppColors.outline.withValues(alpha: 0.5),
+            ),
             filled: true,
             fillColor: AppColors.surfaceContainerHigh,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 18,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide.none,
@@ -82,7 +89,9 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
             suffixIcon: GestureDetector(
               onTap: () => setState(() => _obscure = !_obscure),
               child: Icon(
-                _obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                _obscure
+                    ? Icons.visibility_outlined
+                    : Icons.visibility_off_outlined,
                 color: AppColors.outline,
               ),
             ),

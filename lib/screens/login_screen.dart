@@ -14,10 +14,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey   = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _authService = AuthService();
 
-  final _emailController    = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   bool _isLoading = false;
@@ -91,10 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 8),
             Text(
               'Inicia sesión para continuar cuidando a tus mascotas.',
-              style: TextStyle(
-                fontSize: 15,
-                color: AppColors.onSurfaceVariant,
-              ),
+              style: TextStyle(fontSize: 15, color: AppColors.onSurfaceVariant),
             ),
             const SizedBox(height: 32),
 
@@ -124,6 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       hint: 'hola@sanctuary.com',
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
+                      autocorrect: false,
+                      enableSuggestions: false,
                       validator: FieldValidators.email,
                     ),
                     const SizedBox(height: 20),
@@ -208,7 +207,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                           label: _isLoading
                               ? const SizedBox.shrink()
-                              : const Icon(Icons.arrow_forward, color: Colors.white),
+                              : const Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                ),
                         ),
                       ),
                     ),
