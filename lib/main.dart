@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'config/theme.dart';
-import 'widgets/app_shell.dart';
-import 'app/sprint2_app.dart';
+import 'package:pet_appointment/widgets/widgets.dart';
+import 'package:pet_appointment/config/config.dart';
+import 'package:pet_appointment/app/sprint2_app.dart';
+import 'package:pet_appointment/screens/register_screen.dart';
+import 'package:pet_appointment/screens/login_screen.dart';
+import 'package:pet_appointment/screens/forgot_password_screen.dart';
+import 'package:pet_appointment/screens/reset_password_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +26,13 @@ Future<void> main() async {
             debugShowCheckedModeBanner: false,
             theme: AppTheme.light,
             home: const AppShell(),
+            routes: {
+              '/home': (_) => const AppShell(),
+              '/login': (_) => const LoginScreen(),
+              '/register': (_) => const RegisterScreen(),
+              '/forgot-password': (_) => const ForgotPasswordScreen(),
+              '/reset-password': (_) => const ResetPasswordScreen(),
+            },
           )
         : const PetAppointmentApp(isSupabaseReady: false),
   );
@@ -48,3 +58,4 @@ Future<bool> initializeSupabase() async {
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
   return true;
 }
+
