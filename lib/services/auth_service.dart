@@ -72,4 +72,31 @@ class AuthService {
   Future<void> updatePassword({required String newPassword}) async {
     await _client.auth.updateUser(UserAttributes(password: newPassword));
   }
+
+  /// Correo del usuario autenticado.
+  String get currentUserEmail => _client.auth.currentUser?.email ?? '';
+
+  /// Teléfono del usuario autenticado (del metadata de registro).
+  String get currentUserPhone =>
+      _client.auth.currentUser?.userMetadata?['phone'] as String? ?? '';
+
+  /// Actualiza el nombre y teléfono del usuario en Auth y en public.users.
+  Future<void> updateProfile({
+    required String name,
+    required String phone,
+  }) async {
+    final userId = _client.auth.currentUser?.id;
+    if (userId == null) throw Exception('No hay sesión activa');
+
+    // 1. Actualizar metadata en auth.users
+    await _client.auth.updateUser(
+      UserAttributes(data: {'full_name': name, 'phone': phone}),
+    );
+
+    // 2. Sincronizar con public.users
+    await _client
+        .from('users')
+        .update({'full_name': name, 'phone': phone})
+        .eq('id', userId);
+  }
 }
