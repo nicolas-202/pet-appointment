@@ -2,11 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:pet_appointment/config/theme.dart';
 
 class AuthenticatedHomeScreen extends StatelessWidget {
-  const AuthenticatedHomeScreen({super.key, required this.name});
+  const AuthenticatedHomeScreen({
+    super.key,
+    required this.name,
+    this.role = 'client',
+  });
 
   final String name;
+  final String role;
 
   String get _firstName => name.split(' ').first;
+
+  String get _roleLabel {
+    switch (role) {
+      case 'admin':
+        return 'Administrador';
+      case 'professional':
+        return 'Profesional';
+      default:
+        return 'Cliente';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +79,23 @@ class AuthenticatedHomeScreen extends StatelessWidget {
                   color: AppColors.onSurface,
                 ),
                 textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Text(
+                  'Vista de $_roleLabel',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primary,
+                  ),
+                ),
               ),
               const SizedBox(height: 12),
               Text(

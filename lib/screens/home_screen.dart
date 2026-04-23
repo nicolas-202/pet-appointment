@@ -12,7 +12,23 @@ class HomeScreen extends StatelessWidget {
     final authService = AuthService();
 
     if (authService.hasActiveSession) {
-      return AuthenticatedHomeScreen(name: authService.currentUserName);
+      return FutureBuilder<String>(
+        future: authService.getCurrentUserRole(),
+        builder: (context, snapshot) {
+          final role = snapshot.data ?? 'client';
+          if (role == 'client') {
+            return AuthenticatedHomeScreen(
+              name: authService.currentUserName,
+              role: role,
+            );
+          }
+
+          return AuthenticatedHomeScreen(
+            name: authService.currentUserName,
+            role: role,
+          );
+        },
+      );
     }
 
     return Scaffold(

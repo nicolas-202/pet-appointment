@@ -72,6 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final name = _authService.currentUserName;
     final email = _authService.currentUserEmail;
     final phone = _authService.currentUserPhone;
+    final photoUrl = _authService.currentUserPhotoUrl;
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -104,10 +105,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: AppColors.primaryContainer.withValues(alpha: 0.4),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
-                    Icons.person_rounded,
-                    size: 52,
-                    color: AppColors.primary,
+                  child: ClipOval(
+                    child: photoUrl.isNotEmpty
+                        ? Image.network(
+                            photoUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) => Icon(
+                              Icons.person_rounded,
+                              size: 52,
+                              color: AppColors.primary,
+                            ),
+                          )
+                        : Icon(
+                            Icons.person_rounded,
+                            size: 52,
+                            color: AppColors.primary,
+                          ),
                   ),
                 ),
                 const SizedBox(height: 16),
