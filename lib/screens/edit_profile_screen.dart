@@ -30,10 +30,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController =
-        TextEditingController(text: _authService.currentUserName);
-    _phoneController =
-        TextEditingController(text: _authService.currentUserPhone);
+    _nameController = TextEditingController(text: _authService.currentUserName);
+    _phoneController = TextEditingController(
+      text: _authService.currentUserPhone,
+    );
     _currentPhotoUrl = _authService.currentUserPhotoUrl;
   }
 
@@ -174,27 +174,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ? Image.memory(
                               _selectedPhotoBytes!,
                               fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => Icon(
-                                Icons.person_rounded,
-                                size: 46,
-                                color: AppColors.primary,
-                              ),
-                            )
-                          : (_currentPhotoUrl.isNotEmpty
-                              ? Image.network(
-                                  _currentPhotoUrl,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) => Icon(
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Icon(
                                     Icons.person_rounded,
                                     size: 46,
                                     color: AppColors.primary,
                                   ),
-                                )
-                              : Icon(
-                                  Icons.person_rounded,
-                                  size: 46,
-                                  color: AppColors.primary,
-                                )),
+                            )
+                          : (_currentPhotoUrl.isNotEmpty
+                                ? Image.network(
+                                    _currentPhotoUrl,
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) => Icon(
+                                          Icons.person_rounded,
+                                          size: 46,
+                                          color: AppColors.primary,
+                                        ),
+                                  )
+                                : Icon(
+                                    Icons.person_rounded,
+                                    size: 46,
+                                    color: AppColors.primary,
+                                  )),
                     ),
                   ),
                   Positioned(
@@ -226,7 +228,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: TextButton(
                 onPressed: _isLoading ? null : _pickPhoto,
                 child: const Text('Cambiar foto'),
-                ),
+              ),
             ),
             Center(
               child: Text(
@@ -304,8 +306,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  disabledBackgroundColor:
-                      AppColors.primary.withValues(alpha: 0.5),
+                  disabledBackgroundColor: AppColors.primary.withValues(
+                    alpha: 0.5,
+                  ),
                 ),
                 child: _isLoading
                     ? const SizedBox(

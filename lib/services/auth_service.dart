@@ -140,7 +140,9 @@ class AuthService {
     final objectPath =
         '$userId/avatar_${DateTime.now().millisecondsSinceEpoch}.$safeExtension';
 
-    await _client.storage.from('profile-photos').uploadBinary(
+    await _client.storage
+        .from('profile-photos')
+        .uploadBinary(
           objectPath,
           bytes,
           fileOptions: const FileOptions(upsert: true),
@@ -172,9 +174,6 @@ class AuthService {
       payload['photo_url'] = photoUrl;
     }
 
-    await _client
-        .from('users')
-        .update(payload)
-        .eq('id', userId);
+    await _client.from('users').update(payload).eq('id', userId);
   }
 }

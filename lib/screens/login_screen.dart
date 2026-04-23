@@ -60,12 +60,13 @@ class _LoginScreenState extends State<LoginScreen> {
     } on AuthException catch (e) {
       if (mounted) {
         final raw = e.message.toLowerCase();
-        final message = raw.contains('confirmar tu correo') ||
+        final message =
+            raw.contains('confirmar tu correo') ||
                 raw.contains('email not confirmed')
             ? 'Debes confirmar tu correo antes de iniciar sesión.'
             : raw.contains('invalid login credentials')
-                ? 'Credenciales inválidas. Verifica tu correo y contraseña.'
-                : 'No fue posible iniciar sesión. Intenta de nuevo.';
+            ? 'Credenciales inválidas. Verifica tu correo y contraseña.'
+            : 'No fue posible iniciar sesión. Intenta de nuevo.';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(message), backgroundColor: AppColors.error),
         );

@@ -17,18 +17,13 @@ class _PetsScreenState extends State<PetsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mis Mascotas'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Mis Mascotas'), centerTitle: true),
       body: StreamBuilder<List<Pet>>(
         stream: _petService.userPetsStream(),
         builder: (context, snapshot) {
           // Cargando
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           // Error
@@ -37,11 +32,7 @@ class _PetsScreenState extends State<PetsScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.error_outline,
-                    size: 48,
-                    color: AppColors.error,
-                  ),
+                  Icon(Icons.error_outline, size: 48, color: AppColors.error),
                   const SizedBox(height: 16),
                   Text(
                     'Error cargando mascotas',
@@ -62,11 +53,7 @@ class _PetsScreenState extends State<PetsScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.pets_rounded,
-                    size: 72,
-                    color: AppColors.tertiary,
-                  ),
+                  Icon(Icons.pets_rounded, size: 72, color: AppColors.tertiary),
                   const SizedBox(height: 16),
                   Text(
                     'Aún no tienes mascotas',
@@ -111,8 +98,12 @@ class _PetsScreenState extends State<PetsScreen> {
 
   Widget _buildPetCard(BuildContext context, Pet pet) {
     // Calcula edad aproximada
-    final age = DateTime.now().difference(pet.birthDate ?? DateTime.now()).inDays;
-    final ageText = pet.birthDate != null ? '${(age / 365).toStringAsFixed(1)} años' : 'Edad desconocida';
+    final age = DateTime.now()
+        .difference(pet.birthDate ?? DateTime.now())
+        .inDays;
+    final ageText = pet.birthDate != null
+        ? '${(age / 365).toStringAsFixed(1)} años'
+        : 'Edad desconocida';
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -122,11 +113,7 @@ class _PetsScreenState extends State<PetsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Avatar
-            PetAvatar(
-              species: pet.species,
-              photoUrl: pet.photoUrl,
-              size: 64,
-            ),
+            PetAvatar(species: pet.species, photoUrl: pet.photoUrl, size: 64),
             const SizedBox(width: 12),
 
             // Información
@@ -149,16 +136,15 @@ class _PetsScreenState extends State<PetsScreen> {
                       Text(
                         ageText,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.outline,
-                            ),
+                          color: AppColors.outline,
+                        ),
                       ),
                       if (pet.weight != null) ...[
                         const SizedBox(width: 8),
                         Text(
                           '• ${pet.weight} kg',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: AppColors.outline,
-                              ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: AppColors.outline),
                         ),
                       ],
                     ],
@@ -193,14 +179,8 @@ class _PetsScreenState extends State<PetsScreen> {
                 }
               },
               itemBuilder: (BuildContext context) => [
-                const PopupMenuItem(
-                  value: 'edit',
-                  child: Text('Editar'),
-                ),
-                const PopupMenuItem(
-                  value: 'delete',
-                  child: Text('Eliminar'),
-                ),
+                const PopupMenuItem(value: 'edit', child: Text('Editar')),
+                const PopupMenuItem(value: 'delete', child: Text('Eliminar')),
               ],
             ),
           ],
@@ -210,11 +190,9 @@ class _PetsScreenState extends State<PetsScreen> {
   }
 
   void _navigateToAddPet() async {
-    final result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const AddPetScreen(),
-      ),
-    );
+    final result = await Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const AddPetScreen()));
 
     // El Stream se actualiza automáticamente, pero aquí
     // podrías mostrar un SnackBar si lo deseas

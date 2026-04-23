@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import '../config/theme.dart';
 import '../services/pet_service.dart';
@@ -63,9 +64,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error seleccionando foto: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error seleccionando foto: $e')));
       }
     }
   }
@@ -77,6 +78,17 @@ class _AddPetScreenState extends State<AddPetScreen> {
       firstDate: DateTime(1990),
       lastDate: DateTime.now(),
       locale: const Locale('es', 'ES'),
+      builder: (context, child) {
+        return Localizations(
+          locale: const Locale('es', 'ES'),
+          delegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
     );
 
     if (picked != null) {
@@ -110,10 +122,14 @@ class _AddPetScreenState extends State<AddPetScreen> {
       await _petService.createPet(
         name: _nameController.text.trim(),
         species: _selectedSpecies,
-        breed: _breedController.text.trim().isNotEmpty ? _breedController.text.trim() : null,
+        breed: _breedController.text.trim().isNotEmpty
+            ? _breedController.text.trim()
+            : null,
         birthDate: _selectedBirthDate,
         weight: weight,
-        notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
+        notes: _notesController.text.trim().isNotEmpty
+            ? _notesController.text.trim()
+            : null,
         photoBytes: _selectedPhotoBytes,
       );
 
@@ -145,10 +161,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Especie *',
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text('Especie *', style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 8),
         SegmentedButton<String>(
           segments: const [
@@ -171,10 +184,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Foto (opcional)',
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
+        Text('Foto (opcional)', style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: 12),
         if (_selectedPhotoBytes != null)
           Stack(
@@ -253,8 +263,8 @@ class _AddPetScreenState extends State<AddPetScreen> {
                   style: _selectedBirthDate != null
                       ? Theme.of(context).textTheme.bodyMedium
                       : Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppColors.outline,
-                          ),
+                          color: AppColors.outline,
+                        ),
                 ),
               ],
             ),
@@ -267,10 +277,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Agregar mascota'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Agregar mascota'), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -329,7 +336,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),

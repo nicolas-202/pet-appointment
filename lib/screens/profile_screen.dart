@@ -51,9 +51,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _goToEdit() async {
-    final changed = await Navigator.of(context).push<bool>(
-      MaterialPageRoute(builder: (_) => const EditProfileScreen()),
-    );
+    final changed = await Navigator.of(
+      context,
+    ).push<bool>(MaterialPageRoute(builder: (_) => const EditProfileScreen()));
     if (changed == true) setState(() {}); // refresca datos de Auth
   }
 
@@ -62,9 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _goToChangePassword() async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const ChangePasswordScreen()),
-    );
+    await Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const ChangePasswordScreen()));
   }
 
   @override
@@ -146,7 +146,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 6),
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(50),
@@ -154,8 +156,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.phone_rounded,
-                            size: 14, color: AppColors.primary),
+                        Icon(
+                          Icons.phone_rounded,
+                          size: 14,
+                          color: AppColors.primary,
+                        ),
                         const SizedBox(width: 6),
                         Text(
                           phone,
@@ -191,8 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _MenuItem(
                     icon: Icons.edit_rounded,
                     iconColor: AppColors.primary,
-                    iconBg:
-                        AppColors.primaryContainer.withValues(alpha: 0.4),
+                    iconBg: AppColors.primaryContainer.withValues(alpha: 0.4),
                     label: 'Editar perfil',
                     onTap: _goToEdit,
                   ),
@@ -271,8 +275,7 @@ class _MenuItem extends StatelessWidget {
             Container(
               width: 40,
               height: 40,
-              decoration:
-                  BoxDecoration(color: iconBg, shape: BoxShape.circle),
+              decoration: BoxDecoration(color: iconBg, shape: BoxShape.circle),
               child: Icon(icon, size: 20, color: iconColor),
             ),
             const SizedBox(width: 14),
@@ -287,8 +290,11 @@ class _MenuItem extends StatelessWidget {
               ),
             ),
             if (showChevron)
-              Icon(Icons.chevron_right_rounded,
-                  color: AppColors.outline, size: 20),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: AppColors.outline,
+                size: 20,
+              ),
           ],
         ),
       ),

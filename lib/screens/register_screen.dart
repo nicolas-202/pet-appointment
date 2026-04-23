@@ -65,7 +65,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } on AuthException catch (e) {
       if (mounted) {
         final raw = e.message.toLowerCase();
-        final message = raw.contains('already') ||
+        final message =
+            raw.contains('already') ||
                 raw.contains('registered') ||
                 raw.contains('exists')
             ? 'Ese correo ya está registrado. Intenta iniciar sesión o recuperar tu contraseña.'

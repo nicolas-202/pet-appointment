@@ -35,8 +35,12 @@ class Pet {
       name: json['name'] as String,
       species: json['species'] as String,
       breed: json['breed'] as String?,
-      birthDate: json['birth_date'] != null ? DateTime.parse(json['birth_date'] as String) : null,
-      weight: json['weight'] != null ? (json['weight'] as num).toDouble() : null,
+      birthDate: json['birth_date'] != null
+          ? DateTime.parse(json['birth_date'] as String)
+          : null,
+      weight: json['weight'] != null
+          ? (json['weight'] as num).toDouble()
+          : null,
       notes: json['notes'] as String?,
       photoUrl: json['photo_url'] as String?,
       createdAt: DateTime.parse(json['created_at'] as String),
@@ -47,6 +51,12 @@ class Pet {
 /// Servicio para gestionar mascotas del usuario autenticado.
 class PetService {
   final SupabaseClient _client = Supabase.instance.client;
+
+  bool _isMissingWeightColumnError(Object error) {
+    return error is PostgrestException &&
+        (error.code == 'PGRST204' ||
+            error.message.toLowerCase().contains("'weight'"));
+  }
 
   /// Sube una foto de mascota a Storage.
   ///
@@ -62,7 +72,9 @@ class PetService {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final path = '$userId/$petId/avatar_$timestamp.$fileExtension';
 
-      await _client.storage.from('pet-photos').uploadBinary(
+      await _client.storage
+          .from('pet-photos')
+          .uploadBinary(
             path,
             photoBytes,
             fileOptions: const FileOptions(cacheControl: '3600', upsert: true),
@@ -102,8 +114,7 @@ class PetService {
       throw Exception('Usuario no autenticado');
     }
 
-    // Primero inserta la mascota para obtener el ID
-    final response = await _client.from('pets').insert({
+    final payload = {
       'owner_id': userId,
       'name': name,
       'species': species,
@@ -112,7 +123,25 @@ class PetService {
       'weight': weight,
       'notes': notes,
       'photo_url': null, // Será actualizado si hay foto
-    }).select().single();
+    };
+
+    dynamic response;
+    try {
+      // Inserta con peso cuando la columna existe.
+      response = await _client.from('pets').insert(payload).select().single();
+    } catch (e) {
+      if (!_isMissingWeightColumnError(e)) rethrow;
+
+      // Compatibilidad temporal: si falta la columna weight en BD,
+      // reintenta sin ese campo para no romper el flujo de registro.
+      final fallbackPayload = Map<String, dynamic>.from(payload)
+        ..remove('weight');
+      response = await _client
+          .from('pets')
+          .insert(fallbackPayload)
+          .select()
+          .single();
+    }
 
     final petId = response['id'] as String;
 
@@ -126,7 +155,10 @@ class PetService {
       );
 
       if (photoUrl != null) {
-        await _client.from('pets').update({'photo_url': photoUrl}).eq('id', petId);
+        await _client
+            .from('pets')
+            .update({'photo_url': photoUrl})
+            .eq('id', petId);
       }
     }
 
@@ -174,13 +206,19 @@ class PetService {
         .eq('owner_id', userId)
         .order('created_at', ascending: false);
 
-    return (response as List).map((map) => Pet.fromJson(map as Map<String, dynamic>)).toList();
+    return (response as List)
+        .map((map) => Pet.fromJson(map as Map<String, dynamic>))
+        .toList();
   }
 
   /// Obtiene una mascota por su ID.
   Future<Pet?> getPetById(String petId) async {
     try {
-      final response = await _client.from('pets').select().eq('id', petId).single();
+      final response = await _client
+          .from('pets')
+          .select()
+          .eq('id', petId)
+          .single();
       return Pet.fromJson(response as Map<String, dynamic>);
     } catch (e) {
       print('Error obteniendo mascota: $e');
@@ -208,7 +246,8 @@ class PetService {
     if (name != null) updateData['name'] = name;
     if (species != null) updateData['species'] = species;
     if (breed != null) updateData['breed'] = breed;
-    if (birthDate != null) updateData['birth_date'] = birthDate.toIso8601String();
+    if (birthDate != null)
+      updateData['birth_date'] = birthDate.toIso8601String();
     if (weight != null) updateData['weight'] = weight;
     if (notes != null) updateData['notes'] = notes;
 
@@ -225,7 +264,29 @@ class PetService {
     }
 
     try {
-      final response = await _client.from('pets').update(updateData).eq('id', petId).select().single();
+      dynamic response;
+      try {
+        response = await _client
+            .from('pets')
+            .update(updateData)
+            .eq('id', petId)
+            .select()
+            .single();
+      } catch (e) {
+        if (!_isMissingWeightColumnError(e) ||
+            !updateData.containsKey('weight')) {
+          rethrow;
+        }
+
+        final fallbackUpdate = Map<String, dynamic>.from(updateData)
+          ..remove('weight');
+        response = await _client
+            .from('pets')
+            .update(fallbackUpdate)
+            .eq('id', petId)
+            .select()
+            .single();
+      }
       return Pet.fromJson(response as Map<String, dynamic>);
     } catch (e) {
       print('Error actualizando mascota: $e');
