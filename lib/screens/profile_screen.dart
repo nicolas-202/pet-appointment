@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pet_appointment/config/theme.dart';
+import 'package:pet_appointment/screens/change_password_screen.dart';
 import 'package:pet_appointment/screens/edit_profile_screen.dart';
 import 'package:pet_appointment/screens/login_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
+import 'package:pet_appointment/widgets/app_shell.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -53,6 +55,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       MaterialPageRoute(builder: (_) => const EditProfileScreen()),
     );
     if (changed == true) setState(() {}); // refresca datos de Auth
+  }
+
+  Future<void> _goToPets() async {
+    AppShell.selectTab(context, 1);
+  }
+
+  Future<void> _goToChangePassword() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const ChangePasswordScreen()),
+    );
   }
 
   @override
@@ -177,7 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     iconColor: AppColors.secondary,
                     iconBg: AppColors.secondaryContainer.withValues(alpha: 0.4),
                     label: 'Mis mascotas',
-                    onTap: () {}, // pendiente de implementar
+                    onTap: _goToPets,
                   ),
                   _Divider(),
                   _MenuItem(
@@ -185,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     iconColor: AppColors.onSurfaceVariant,
                     iconBg: AppColors.surfaceContainerHigh,
                     label: 'Cambiar contraseña',
-                    onTap: () {},
+                    onTap: _goToChangePassword,
                   ),
                   _Divider(),
                   _MenuItem(
@@ -214,8 +226,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-// ── Widgets privados ──────────────────────────────────────────────────────────
 
 class _MenuItem extends StatelessWidget {
   const _MenuItem({
