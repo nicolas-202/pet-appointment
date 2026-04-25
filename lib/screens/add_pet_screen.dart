@@ -7,7 +7,9 @@ import '../services/pet_service.dart';
 import '../utils/field_validators.dart';
 
 class AddPetScreen extends StatefulWidget {
-  const AddPetScreen({super.key});
+  const AddPetScreen({super.key, this.initialPet});
+
+  final Pet? initialPet;
 
   @override
   State<AddPetScreen> createState() => _AddPetScreenState();
@@ -26,16 +28,29 @@ class _AddPetScreenState extends State<AddPetScreen> {
   String _selectedSpecies = 'Perro';
   DateTime? _selectedBirthDate;
   Uint8List? _selectedPhotoBytes;
-  XFile? _selectedPhotoFile;
+  String? _existingPhotoUrl;
+  bool _removeExistingPhoto = false;
   bool _isLoading = false;
+
+  bool get _isEditMode => widget.initialPet != null;
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
-    _breedController = TextEditingController();
-    _weightController = TextEditingController();
-    _notesController = TextEditingController();
+
+    final initialPet = widget.initialPet;
+    _nameController = TextEditingController(text: initialPet?.name ?? '');
+    _breedController = TextEditingController(text: initialPet?.breed ?? '');
+    _weightController = TextEditingController(
+      text: initialPet?.weight?.toString() ?? '',
+    );
+    _notesController = TextEditingController(text: initialPet?.notes ?? '');
+
+    if (initialPet != null) {
+      _selectedSpecies = initialPet.species;
+      _selectedBirthDate = initialPet.birthDate;
+      _existingPhotoUrl = initialPet.photoUrl;
+    }
   }
 
   @override
@@ -58,8 +73,8 @@ class _AddPetScreenState extends State<AddPetScreen> {
       if (pickedFile != null) {
         final bytes = await pickedFile.readAsBytes();
         setState(() {
-          _selectedPhotoFile = pickedFile;
           _selectedPhotoBytes = bytes;
+          _removeExistingPhoto = false;
         });
       }
     } catch (e) {
@@ -119,25 +134,53 @@ class _AddPetScreenState extends State<AddPetScreen> {
           ? double.tryParse(_weightController.text)
           : null;
 
-      await _petService.createPet(
-        name: _nameController.text.trim(),
-        species: _selectedSpecies,
-        breed: _breedController.text.trim().isNotEmpty
-            ? _breedController.text.trim()
-            : null,
-        birthDate: _selectedBirthDate,
-        weight: weight,
-        notes: _notesController.text.trim().isNotEmpty
-            ? _notesController.text.trim()
-            : null,
-        photoBytes: _selectedPhotoBytes,
-      );
+      final cleanBreed = _breedController.text.trim().isNotEmpty
+          ? _breedController.text.trim()
+          : null;
+      final cleanNotes = _notesController.text.trim().isNotEmpty
+          ? _notesController.text.trim()
+          : null;
 
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('¡Mascota registrada exitosamente!')),
+      if (_isEditMode) {
+        final updatedPet = await _petService.updatePet(
+          petId: widget.initialPet!.id,
+          name: _nameController.text.trim(),
+          species: _selectedSpecies,
+          breed: cleanBreed,
+          birthDate: _selectedBirthDate!,
+          weight: weight,
+          notes: cleanNotes,
+          photoBytes: _selectedPhotoBytes,
+          removePhoto: _removeExistingPhoto,
         );
-        Navigator.of(context).pop(true); // Retorna true para recargar lista
+
+        if (updatedPet == null) {
+          throw Exception('No fue posible actualizar la mascota');
+        }
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('¡Cambios guardados exitosamente!')),
+          );
+          Navigator.of(context).pop(updatedPet);
+        }
+      } else {
+        await _petService.createPet(
+          name: _nameController.text.trim(),
+          species: _selectedSpecies,
+          breed: cleanBreed,
+          birthDate: _selectedBirthDate,
+          weight: weight,
+          notes: cleanNotes,
+          photoBytes: _selectedPhotoBytes,
+        );
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('¡Mascota registrada exitosamente!')),
+          );
+          Navigator.of(context).pop(true);
+        }
       }
     } catch (e) {
       if (mounted) {
@@ -206,11 +249,55 @@ class _AddPetScreenState extends State<AddPetScreen> {
                   onTap: () {
                     setState(() {
                       _selectedPhotoBytes = null;
-                      _selectedPhotoFile = null;
+                      _removeExistingPhoto = true;
                     });
                   },
                   child: Container(
                     decoration: BoxDecoration(
+                      color: AppColors.error,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        else if (_existingPhotoUrl != null && !_removeExistingPhoto)
+          Stack(
+            alignment: Alignment.topRight,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  _existingPhotoUrl!,
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => Container(
+                    width: 120,
+                    height: 120,
+                    color: AppColors.surfaceContainerLow,
+                    child: const Icon(Icons.broken_image_outlined),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _removeExistingPhoto = true;
+                    });
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
                       color: AppColors.error,
                       shape: BoxShape.circle,
                     ),
@@ -277,7 +364,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Agregar mascota'), centerTitle: true),
+      appBar: AppBar(
+        title: Text(_isEditMode ? 'Editar mascota' : 'Agregar mascota'),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -296,7 +386,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                validator: FieldValidators.required,
+                validator: FieldValidators.petName,
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
@@ -316,6 +406,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+                validator: FieldValidators.petBreed,
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
@@ -339,6 +430,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
+                validator: FieldValidators.petWeight,
                 textInputAction: TextInputAction.next,
               ),
               const SizedBox(height: 16),
@@ -354,6 +446,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+                validator: FieldValidators.petNotes,
                 maxLines: 3,
                 textInputAction: TextInputAction.done,
               ),
@@ -372,7 +465,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                         width: 20,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : const Text('Guardar mascota'),
+                    : Text(_isEditMode ? 'Guardar cambios' : 'Guardar mascota'),
               ),
             ],
           ),

@@ -333,8 +333,8 @@ class _PetsScreenState extends State<PetsScreen> {
     );
   }
 
-  void _goToPetDetail(PetListItem item) {
-    Navigator.of(context).push(
+  Future<void> _goToPetDetail(PetListItem item) async {
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PetDetailScreen(
           pet: item.pet,
@@ -342,6 +342,12 @@ class _PetsScreenState extends State<PetsScreen> {
         ),
       ),
     );
+
+    if (!mounted) return;
+
+    if (result == true) {
+      setState(_reloadPets);
+    }
   }
 
   Future<void> _navigateToAddPet() async {
