@@ -200,12 +200,12 @@ Supabase configurado
 
 #### Criterios de éxito del Sprint 2
 
-* [ ] Usuario puede registrarse, iniciar sesión y cerrar sesión.
-* [ ] El token JWT se persiste entre sesiones (no pide login cada vez que abre la app).
-* [ ] La navegación redirecciona correctamente según el rol del usuario.
-* [ ] Un cliente autenticado puede registrar, listar, editar y eliminar sus mascotas.
-* [ ] La base de datos en Supabase tiene el esquema completo y las políticas RLS activas.
-* [ ] `flutter analyze` pasa sin errores ni warnings bloqueadores.
+* [x] Usuario puede registrarse, iniciar sesión y cerrar sesión.
+* [x] El token JWT se persiste entre sesiones (no pide login cada vez que abre la app).
+* [x] La navegación redirecciona correctamente según el rol del usuario.
+* [x] Un cliente autenticado puede registrar, listar, editar y eliminar sus mascotas.
+* [x] La base de datos en Supabase tiene el esquema completo y las políticas RLS activas.
+* [x] `flutter analyze` pasa sin errores ni warnings bloqueadores.
 
 ---
 
@@ -635,11 +635,11 @@ Auth operativa (Sprint 2)
 
 **Criterios de aceptación:**
 
-* [ ] El formulario de edición viene prellenado con todos los datos actuales.
-* [ ] Solo el propietario de la mascota puede editarla (validado por RLS).
-* [ ] Si se cambia la foto, la anterior se elimina de Storage para no acumular archivos huérfanos.
-* [ ] Los cambios se reflejan inmediatamente en la lista y en el detalle.
-* [ ] Se muestra confirmación visual de éxito o mensaje de error.
+* [x] El formulario de edición viene prellenado con todos los datos actuales.
+* [x] Solo el propietario de la mascota puede editarla (validado por RLS).
+* [x] Si se cambia la foto, la anterior se elimina de Storage para no acumular archivos huérfanos.
+* [x] Los cambios se reflejan inmediatamente en la lista y en el detalle.
+* [x] Se muestra confirmación visual de éxito o mensaje de error.
 
 | Campo        | Valor               |
 | ------------ | ------------------- |

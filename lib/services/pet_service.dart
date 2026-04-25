@@ -60,6 +60,39 @@ class PetListItem {
 class PetService {
   final SupabaseClient _client = Supabase.instance.client;
 
+  String? _extractStoragePathFromPublicUrl(String? publicUrl) {
+    if (publicUrl == null || publicUrl.isEmpty) return null;
+
+    try {
+      final uri = Uri.parse(publicUrl);
+      final bucketIndex = uri.pathSegments.indexOf('pet-photos');
+      if (bucketIndex == -1 || bucketIndex + 1 >= uri.pathSegments.length) {
+        return null;
+      }
+
+      final relativeSegments = uri.pathSegments
+          .sublist(bucketIndex + 1)
+          .map(Uri.decodeComponent)
+          .toList();
+
+      if (relativeSegments.isEmpty) return null;
+      return relativeSegments.join('/');
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Future<void> _deletePetPhotoByUrl(String? photoUrl) async {
+    final path = _extractStoragePathFromPublicUrl(photoUrl);
+    if (path == null || path.isEmpty) return;
+
+    try {
+      await _client.storage.from('pet-photos').remove([path]);
+    } catch (e) {
+      print('Error eliminando foto de mascota en storage: $e');
+    }
+  }
+
   bool _isMissingWeightColumnError(Object error) {
     return error is PostgrestException &&
         (error.code == 'PGRST204' ||
@@ -287,39 +320,45 @@ class PetService {
   /// Actualiza una mascota existente.
   Future<Pet?> updatePet({
     required String petId,
-    String? name,
-    String? species,
+    required String name,
+    required String species,
+    required DateTime birthDate,
     String? breed,
-    DateTime? birthDate,
     double? weight,
     String? notes,
     Uint8List? photoBytes,
+    bool removePhoto = false,
   }) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) {
       throw Exception('Usuario no autenticado');
     }
 
-    final updateData = <String, dynamic>{};
-    if (name != null) updateData['name'] = name;
-    if (species != null) updateData['species'] = species;
-    if (breed != null) updateData['breed'] = breed;
-    if (birthDate != null) {
-      updateData['birth_date'] = birthDate.toIso8601String();
-    }
-    if (weight != null) updateData['weight'] = weight;
-    if (notes != null) updateData['notes'] = notes;
+    final currentPet = await getPetById(petId);
+    final oldPhotoUrl = currentPet?.photoUrl;
 
-    // Si hay nueva foto, la sube primero
+    String? newPhotoUrl;
     if (photoBytes != null && photoBytes.isNotEmpty) {
-      final photoUrl = await uploadPetPhoto(
+      newPhotoUrl = await uploadPetPhoto(
         userId: userId,
         petId: petId,
         photoBytes: photoBytes,
       );
-      if (photoUrl != null) {
-        updateData['photo_url'] = photoUrl;
-      }
+    }
+
+    final updateData = <String, dynamic>{
+      'name': name,
+      'species': species,
+      'breed': breed,
+      'birth_date': birthDate.toIso8601String(),
+      'weight': weight,
+      'notes': notes,
+    };
+
+    if (newPhotoUrl != null) {
+      updateData['photo_url'] = newPhotoUrl;
+    } else if (removePhoto) {
+      updateData['photo_url'] = null;
     }
 
     try {
@@ -346,7 +385,20 @@ class PetService {
             .select()
             .single();
       }
-      return Pet.fromJson(response as Map<String, dynamic>);
+
+      final updatedPet = Pet.fromJson(response as Map<String, dynamic>);
+
+      final photoChanged =
+          newPhotoUrl != null &&
+          oldPhotoUrl != null &&
+          oldPhotoUrl != newPhotoUrl;
+      final photoRemoved = removePhoto && oldPhotoUrl != null;
+
+      if (photoChanged || photoRemoved) {
+        await _deletePetPhotoByUrl(oldPhotoUrl);
+      }
+
+      return updatedPet;
     } catch (e) {
       print('Error actualizando mascota: $e');
       return null;
@@ -356,7 +408,12 @@ class PetService {
   /// Elimina una mascota.
   Future<bool> deletePet(String petId) async {
     try {
+      final currentPet = await getPetById(petId);
+
       await _client.from('pets').delete().eq('id', petId);
+
+      await _deletePetPhotoByUrl(currentPet?.photoUrl);
+
       return true;
     } catch (e) {
       print('Error eliminando mascota: $e');

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../screens/add_pet_screen.dart';
 import '../config/theme.dart';
 import '../services/pet_service.dart';
 import '../widgets/pet_avatar.dart';
 
-class PetDetailScreen extends StatelessWidget {
+class PetDetailScreen extends StatefulWidget {
   const PetDetailScreen({
     super.key,
     required this.pet,
@@ -12,6 +13,24 @@ class PetDetailScreen extends StatelessWidget {
 
   final Pet pet;
   final DateTime? lastAppointmentAt;
+
+  @override
+  State<PetDetailScreen> createState() => _PetDetailScreenState();
+}
+
+class _PetDetailScreenState extends State<PetDetailScreen> {
+  final _petService = PetService();
+  late Pet _pet;
+  late DateTime? _lastAppointmentAt;
+  bool _didUpdate = false;
+  bool _isDeleting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pet = widget.pet;
+    _lastAppointmentAt = widget.lastAppointmentAt;
+  }
 
   String _formatDate(DateTime? date) {
     if (date == null) return 'Sin citas aun';
@@ -52,134 +71,225 @@ class PetDetailScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _openEditPet() async {
+    final result = await Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => AddPetScreen(initialPet: _pet)));
+
+    if (!mounted || result == null) return;
+
+    if (result is Pet) {
+      setState(() {
+        _pet = result;
+        _didUpdate = true;
+      });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Mascota actualizada')));
+    }
+  }
+
+  Future<void> _deletePet() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Eliminar mascota'),
+        content: Text(
+          '¿Deseas eliminar a ${_pet.name}? Esta acción no se puede deshacer.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancelar'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
+            child: const Text('Eliminar'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    setState(() => _isDeleting = true);
+    final deleted = await _petService.deletePet(_pet.id);
+    if (!mounted) return;
+    setState(() => _isDeleting = false);
+
+    if (deleted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Mascota eliminada exitosamente')),
+      );
+      Navigator.of(context).pop(true);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'No fue posible eliminar la mascota. Intenta de nuevo.',
+          ),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detalle de mascota'),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFFE8F2FF), Color(0xFFF5F7FA)],
-                ),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppColors.surfaceContainerHigh),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.04),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      border: Border.all(color: AppColors.surfaceContainerHigh),
-                    ),
-                    child: PetAvatar(
-                      species: pet.species,
-                      photoUrl: pet.photoUrl,
-                      size: 92,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          pet.name,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.headlineMedium?.copyWith(height: 1.1),
-                        ),
-                        const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: [
-                            _PillChip(
-                              icon: _speciesIcon(pet.species),
-                              text: _speciesLabel(pet.species),
-                              color: AppColors.primary,
-                            ),
-                            _PillChip(
-                              icon: Icons.monitor_weight_outlined,
-                              text: _weightText(pet.weight),
-                              color: AppColors.secondary,
-                            ),
-                            _PillChip(
-                              icon: Icons.cake_outlined,
-                              text: _ageText(pet.birthDate),
-                              color: AppColors.tertiary,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        Navigator.of(context).pop(_didUpdate);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Detalle de mascota'),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: _isDeleting ? null : _deletePet,
+              icon: _isDeleting
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : const Icon(Icons.delete_outline),
+              tooltip: 'Eliminar',
             ),
-            const SizedBox(height: 18),
-            Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: Text(
-                'Informacion general',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.onSurface,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            _DataCard(
-              title: 'Raza',
-              icon: Icons.pets_outlined,
-              value: (pet.breed == null || pet.breed!.isEmpty)
-                  ? 'No registrada'
-                  : pet.breed!,
-            ),
-            _DataCard(
-              title: 'Fecha de nacimiento',
-              icon: Icons.calendar_month_outlined,
-              value: pet.birthDate == null
-                  ? 'No registrada'
-                  : _formatDate(pet.birthDate),
-            ),
-            _DataCard(
-              title: 'Ultima cita',
-              icon: Icons.event_available_outlined,
-              value: _formatDate(lastAppointmentAt),
-              accent: AppColors.secondary,
-            ),
-            _DataCard(
-              title: 'Notas',
-              icon: Icons.sticky_note_2_outlined,
-              value: (pet.notes == null || pet.notes!.isEmpty)
-                  ? 'Sin notas'
-                  : pet.notes!,
-              isMultiLine: true,
-              accent: AppColors.tertiary,
+            TextButton.icon(
+              onPressed: _isDeleting ? null : _openEditPet,
+              icon: const Icon(Icons.edit_outlined),
+              label: const Text('Editar'),
             ),
           ],
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0xFFE8F2FF), Color(0xFFF5F7FA)],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: AppColors.surfaceContainerHigh),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.04),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(
+                          color: AppColors.surfaceContainerHigh,
+                        ),
+                      ),
+                      child: PetAvatar(
+                        species: _pet.species,
+                        photoUrl: _pet.photoUrl,
+                        size: 92,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _pet.name,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.headlineMedium?.copyWith(height: 1.1),
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              _PillChip(
+                                icon: _speciesIcon(_pet.species),
+                                text: _speciesLabel(_pet.species),
+                                color: AppColors.primary,
+                              ),
+                              _PillChip(
+                                icon: Icons.monitor_weight_outlined,
+                                text: _weightText(_pet.weight),
+                                color: AppColors.secondary,
+                              ),
+                              _PillChip(
+                                icon: Icons.cake_outlined,
+                                text: _ageText(_pet.birthDate),
+                                color: AppColors.tertiary,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 18),
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: Text(
+                  'Informacion general',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.onSurface,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              _DataCard(
+                title: 'Raza',
+                icon: Icons.pets_outlined,
+                value: (_pet.breed == null || _pet.breed!.isEmpty)
+                    ? 'No registrada'
+                    : _pet.breed!,
+              ),
+              _DataCard(
+                title: 'Fecha de nacimiento',
+                icon: Icons.calendar_month_outlined,
+                value: _pet.birthDate == null
+                    ? 'No registrada'
+                    : _formatDate(_pet.birthDate),
+              ),
+              _DataCard(
+                title: 'Ultima cita',
+                icon: Icons.event_available_outlined,
+                value: _formatDate(_lastAppointmentAt),
+                accent: AppColors.secondary,
+              ),
+              _DataCard(
+                title: 'Notas',
+                icon: Icons.sticky_note_2_outlined,
+                value: (_pet.notes == null || _pet.notes!.isEmpty)
+                    ? 'Sin notas'
+                    : _pet.notes!,
+                isMultiLine: true,
+                accent: AppColors.tertiary,
+              ),
+            ],
+          ),
         ),
       ),
     );
