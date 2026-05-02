@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pet_appointment/config/theme.dart';
-import 'package:pet_appointment/screens/forgot_password_screen.dart';
-import 'package:pet_appointment/screens/register_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
+import 'package:pet_appointment/utils/snackbar_helper.dart';
 import 'package:pet_appointment/widgets/widgets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -41,27 +40,18 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text,
       );
 
-      // Limpiar todo el stack y dejar solo AppShell para que el botón
-      // atrás no regrese a ninguna pantalla anterior sin sesión
       if (mounted) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const AppShell()),
-          (_) => false,
-        );
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/home', (_) => false);
       }
     } on AuthException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message), backgroundColor: AppColors.error),
-        );
-      }
+      if (mounted) showAppSnackBar(context, e.message, color: AppColors.error);
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error inesperado. Intenta de nuevo.'),
-            backgroundColor: AppColors.error,
-          ),
+        showAppSnackBar(
+          context,
+          'Error inesperado. Intenta de nuevo.',
+          color: AppColors.error,
         );
       }
     } finally {
@@ -83,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Text(
               'Bienvenido de vuelta.',
               style: TextStyle(
-                fontFamily: 'Plus Jakarta Sans',
+                fontFamily: AppFonts.primary,
                 fontWeight: FontWeight.w800,
                 fontSize: 30,
                 color: AppColors.onSurface,
@@ -97,20 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 32),
 
             // --- Tarjeta del formulario ---
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 30,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
+            FormCard(
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -141,11 +118,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const ForgotPasswordScreen(),
-                          ),
-                        ),
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/forgot-password'),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,
@@ -164,60 +138,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 28),
 
                     // --- Botón Iniciar sesión ---
-                    SizedBox(
-                      width: double.infinity,
-                      height: 58,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [AppColors.primary, Color(0xFF2F517A)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.35),
-                              blurRadius: 20,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: ElevatedButton.icon(
-                          onPressed: _isLoading ? null : _login,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          icon: _isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Text(
-                                  'Iniciar sesión',
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                          label: _isLoading
-                              ? const SizedBox.shrink()
-                              : const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                ),
-                        ),
-                      ),
+                    GradientPrimaryButton(
+                      label: 'Iniciar sesión',
+                      onPressed: _login,
+                      isLoading: _isLoading,
                     ),
                   ],
                 ),
@@ -237,9 +161,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => const RegisterScreen()),
-                  ),
+                  onTap: () =>
+                      Navigator.of(context).pushReplacementNamed('/register'),
                   child: Text(
                     'Regístrate',
                     style: TextStyle(
@@ -271,28 +194,11 @@ class _LoginScreenState extends State<LoginScreen> {
           if (canPop) {
             Navigator.of(context).pop();
           } else {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => const AppShell()),
-            );
+            Navigator.of(context).pushReplacementNamed('/home');
           }
         },
       ),
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.pets, color: AppColors.primary, size: 28),
-          const SizedBox(width: 8),
-          Text(
-            'Pet Sanctuary',
-            style: TextStyle(
-              fontFamily: 'Plus Jakarta Sans',
-              fontWeight: FontWeight.w800,
-              fontSize: 18,
-              color: AppColors.primary,
-            ),
-          ),
-        ],
-      ),
+      title: const AppLogoTitle(),
     );
   }
 }

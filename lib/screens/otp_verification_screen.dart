@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pet_appointment/config/theme.dart';
-import 'package:pet_appointment/screens/reset_password_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -72,9 +71,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           .verifyRecoveryOtp(email: widget.email.trim(), otp: _otpValue.trim())
           .timeout(const Duration(seconds: 15));
       if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const ResetPasswordScreen()),
-        );
+        Navigator.of(context)
+            .pushReplacementNamed('/reset-password');
       }
     } on TimeoutException {
       if (mounted) {

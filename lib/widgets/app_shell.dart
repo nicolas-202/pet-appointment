@@ -25,10 +25,8 @@ class _AppShellState extends State<AppShell> {
 
   void _onTabSelected(int index) {
     if (_protectedTabs.contains(index) && !AuthService().hasActiveSession) {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
-      return; // no cambiar el tab activo
+      Navigator.of(context).pushNamed('/login');
+      return;
     }
     setState(() => _currentIndex = index);
   }

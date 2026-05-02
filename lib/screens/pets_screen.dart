@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../config/theme.dart';
+import 'package:pet_appointment/config/theme.dart';
 
 class PetsScreen extends StatelessWidget {
   const PetsScreen({super.key});

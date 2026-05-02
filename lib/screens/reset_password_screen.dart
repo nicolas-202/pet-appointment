@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pet_appointment/config/theme.dart';
-import 'package:pet_appointment/screens/login_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
 import 'package:pet_appointment/widgets/widgets.dart';
@@ -59,11 +58,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             backgroundColor: AppColors.secondary,
           ),
         );
-        // Limpiar todo el stack y redirigir al login
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const LoginScreen()),
-          (_) => false,
-        );
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/login', (_) => false);
       }
     } on TimeoutException {
       if (mounted) {

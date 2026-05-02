@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_appointment/config/theme.dart';
 import 'package:pet_appointment/screens/authenticated_home_screen.dart';
-import 'package:pet_appointment/screens/login_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -84,9 +83,8 @@ class _HeroSection extends StatelessWidget {
                           horizontal: 24, vertical: 14),
                       shape: const StadiumBorder(),
                     ),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const LoginScreen()),
-                    ),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/login'),
                     icon: const Text(
                       'Comenzar',
                       style: TextStyle(fontWeight: FontWeight.w700),
@@ -387,9 +385,7 @@ class _CtaSection extends StatelessWidget {
                     horizontal: 40, vertical: 16),
                 shape: const StadiumBorder(),
               ),
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const LoginScreen()),
-              ),
+              onPressed: () => Navigator.of(context).pushNamed('/login'),
               child: const Text('Únete ahora',
                   style: TextStyle(
                       fontSize: 16, fontWeight: FontWeight.w700)),

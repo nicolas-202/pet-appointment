@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_appointment/config/theme.dart';
+import 'package:pet_appointment/widgets/app_logo_title.dart';
 
 class AuthenticatedHomeScreen extends StatelessWidget {
   const AuthenticatedHomeScreen({super.key, required this.name});
@@ -16,22 +17,7 @@ class AuthenticatedHomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.pets, color: AppColors.primary, size: 26),
-            const SizedBox(width: 8),
-            Text(
-              'Pet Sanctuary',
-              style: TextStyle(
-                fontFamily: 'Plus Jakarta Sans',
-                fontWeight: FontWeight.w800,
-                fontSize: 18,
-                color: AppColors.primary,
-              ),
-            ),
-          ],
-        ),
+        title: const AppLogoTitle(iconSize: 26),
         titleSpacing: 16,
       ),
       body: Center(
@@ -57,7 +43,7 @@ class AuthenticatedHomeScreen extends StatelessWidget {
               Text(
                 '¡Hola, $_firstName! 👋',
                 style: const TextStyle(
-                  fontFamily: 'Plus Jakarta Sans',
+                  fontFamily: AppFonts.primary,
                   fontWeight: FontWeight.w800,
                   fontSize: 28,
                   color: AppColors.onSurface,
