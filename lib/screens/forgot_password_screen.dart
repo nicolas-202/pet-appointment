@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pet_appointment/config/theme.dart';
+import 'package:pet_appointment/screens/otp_verification_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
 import 'package:pet_appointment/widgets/widgets.dart';
@@ -39,8 +39,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       );
       if (mounted) {
         setState(() => _isLoading = false);
-        final email = Uri.encodeComponent(_emailController.text.trim());
-        context.go('/otp-verification?email=$email');
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => OtpVerificationScreen(
+              email: _emailController.text.trim(),
+            ),
+          ),
+        );
       }
     } on AuthException catch (e) {
       if (mounted) {

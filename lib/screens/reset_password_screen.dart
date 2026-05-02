@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pet_appointment/config/theme.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
@@ -59,8 +58,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             backgroundColor: AppColors.secondary,
           ),
         );
-        // Redirigir al login con Go Router
-        context.go('/login');
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/login', (_) => false);
       }
     } on TimeoutException {
       if (mounted) {

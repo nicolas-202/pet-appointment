@@ -126,7 +126,6 @@ class AuthService {
   Future<bool> restoreSession() async {
     try {
       final storedToken = await _secureStorage.read(key: _sessionTokenKey);
-      final storedRefreshToken = await _secureStorage.read(key: _refreshTokenKey);
 
       if (storedToken == null) {
         return false;
