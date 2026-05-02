@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pet_appointment/screens/authenticated_home_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pet_appointment/config/theme.dart';
-import 'package:pet_appointment/screens/forgot_password_screen.dart';
-import 'package:pet_appointment/screens/register_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
 import 'package:pet_appointment/widgets/widgets.dart';
@@ -42,20 +40,9 @@ class _LoginScreenState extends State<LoginScreen> {
         password: _passwordController.text,
       );
 
-      final destination = role == 'client'
-          ? const AppShell()
-          : AuthenticatedHomeScreen(
-              name: _authService.currentUserName,
-              role: role,
-            );
-
-      // Limpiar todo el stack y dejar solo AppShell para que el botón
-      // atrás no regrese a ninguna pantalla anterior sin sesión
       if (mounted) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => destination),
-          (_) => false,
-        );
+        // Usar Go Router para navegar al home
+        context.go('/home');
       }
     } on AuthException catch (e) {
       if (mounted) {
@@ -157,11 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const ForgotPasswordScreen(),
-                          ),
-                        ),
+                        onPressed: () => context.go('/forgot-password'),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,
@@ -253,9 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => const RegisterScreen()),
-                  ),
+                  onTap: () => context.go('/register'),
                   child: Text(
                     'Regístrate',
                     style: TextStyle(

@@ -4,7 +4,9 @@ import 'package:pet_appointment/screens/screens.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 
 class AppShell extends StatefulWidget {
-  const AppShell({super.key});
+  const AppShell({super.key, this.child});
+
+  final Widget? child;
 
   static void selectTab(BuildContext context, int index) {
     final shellState = context.findAncestorStateOfType<_AppShellState>();
@@ -40,8 +42,11 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    // Si recibe un child de Go Router, usarlo; de lo contrario, mostrar la pantalla del índice
+    final body = widget.child ?? _screens[_currentIndex];
+
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: body,
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         backgroundColor: Colors.white.withValues(alpha: 0.9),

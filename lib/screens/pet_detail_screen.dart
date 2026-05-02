@@ -7,12 +7,14 @@ import '../widgets/pet_avatar.dart';
 class PetDetailScreen extends StatefulWidget {
   const PetDetailScreen({
     super.key,
-    required this.pet,
-    required this.lastAppointmentAt,
+    this.pet,
+    this.lastAppointmentAt,
+    this.petId,
   });
 
-  final Pet pet;
+  final Pet? pet;
   final DateTime? lastAppointmentAt;
+  final String? petId;
 
   @override
   State<PetDetailScreen> createState() => _PetDetailScreenState();
@@ -24,12 +26,37 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
   late DateTime? _lastAppointmentAt;
   bool _didUpdate = false;
   bool _isDeleting = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _pet = widget.pet;
-    _lastAppointmentAt = widget.lastAppointmentAt;
+    if (widget.pet != null) {
+      _pet = widget.pet!;
+      _lastAppointmentAt = widget.lastAppointmentAt;
+    } else if (widget.petId != null) {
+      _isLoading = true;
+      _loadPetData();
+    }
+  }
+
+  Future<void> _loadPetData() async {
+    try {
+      final pet = await _petService.getPetById(widget.petId!);
+      if (pet != null && mounted) {
+        setState(() {
+          _pet = pet;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error cargando mascota: $e')),
+        );
+      }
+    }
   }
 
   String _formatDate(DateTime? date) {
@@ -168,6 +195,17 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Mostrar loading si no tenemos datos aún
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Cargando...'),
+          centerTitle: true,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {

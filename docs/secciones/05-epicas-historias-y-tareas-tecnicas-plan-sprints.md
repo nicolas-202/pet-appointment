@@ -200,12 +200,12 @@ Supabase configurado
 
 #### Criterios de éxito del Sprint 2
 
-* [x] Usuario puede registrarse, iniciar sesión y cerrar sesión.
-* [x] El token JWT se persiste entre sesiones (no pide login cada vez que abre la app).
-* [x] La navegación redirecciona correctamente según el rol del usuario.
-* [x] Un cliente autenticado puede registrar, listar, editar y eliminar sus mascotas.
-* [x] La base de datos en Supabase tiene el esquema completo y las políticas RLS activas.
-* [x] `flutter analyze` pasa sin errores ni warnings bloqueadores.
+* [X] Usuario puede registrarse, iniciar sesión y cerrar sesión.
+* [X] El token JWT se persiste entre sesiones (no pide login cada vez que abre la app).
+* [X] La navegación redirecciona correctamente según el rol del usuario.
+* [X] Un cliente autenticado puede registrar, listar, editar y eliminar sus mascotas.
+* [X] La base de datos en Supabase tiene el esquema completo y las políticas RLS activas.
+* [X] `flutter analyze` pasa sin errores ni warnings bloqueadores.
 
 ---
 
@@ -561,12 +561,12 @@ Auth operativa (Sprint 2)
 
 **Criterios de aceptación:**
 
-* [x] El formulario valida campos obligatorios antes de enviar.
-* [x] La mascota se guarda en la tabla `pets` con el `user_id` del cliente autenticado.
-* [x] La foto se sube a Storage y se guarda la URL pública en `pets.photo_url`.
-* [x] Si no se sube foto, se muestra un avatar genérico según la especie.
-* [x] Tras guardar, la mascota aparece inmediatamente en la lista sin recargar.
-* [x] Si el guardado falla, se muestra mensaje de error y el formulario no se cierra (para no perder los datos).
+* [X] El formulario valida campos obligatorios antes de enviar.
+* [X] La mascota se guarda en la tabla `pets` con el `user_id` del cliente autenticado.
+* [X] La foto se sube a Storage y se guarda la URL pública en `pets.photo_url`.
+* [X] Si no se sube foto, se muestra un avatar genérico según la especie.
+* [X] Tras guardar, la mascota aparece inmediatamente en la lista sin recargar.
+* [X] Si el guardado falla, se muestra mensaje de error y el formulario no se cierra (para no perder los datos).
 
 | Campo        | Valor               |
 | ------------ | ------------------- |
@@ -598,11 +598,11 @@ Auth operativa (Sprint 2)
 
 **Criterios de aceptación:**
 
-* [x] La lista solo muestra las mascotas del cliente autenticado.
-* [x] Cada tarjeta muestra: foto/avatar, nombre, especie, y última cita (o "Sin citas aún").
-* [x] Si no hay mascotas, se muestra un estado vacío con CTA para registrar la primera.
-* [x] Al pulsar una mascota, se navega a la pantalla de detalle con todos sus datos.
-* [x] La lista se ordena por nombre alfabéticamente de forma predeterminada.
+* [X] La lista solo muestra las mascotas del cliente autenticado.
+* [X] Cada tarjeta muestra: foto/avatar, nombre, especie, y última cita (o "Sin citas aún").
+* [X] Si no hay mascotas, se muestra un estado vacío con CTA para registrar la primera.
+* [X] Al pulsar una mascota, se navega a la pantalla de detalle con todos sus datos.
+* [X] La lista se ordena por nombre alfabéticamente de forma predeterminada.
 
 | Campo        | Valor               |
 | ------------ | ------------------- |
@@ -635,11 +635,11 @@ Auth operativa (Sprint 2)
 
 **Criterios de aceptación:**
 
-* [x] El formulario de edición viene prellenado con todos los datos actuales.
-* [x] Solo el propietario de la mascota puede editarla (validado por RLS).
-* [x] Si se cambia la foto, la anterior se elimina de Storage para no acumular archivos huérfanos.
-* [x] Los cambios se reflejan inmediatamente en la lista y en el detalle.
-* [x] Se muestra confirmación visual de éxito o mensaje de error.
+* [X] El formulario de edición viene prellenado con todos los datos actuales.
+* [X] Solo el propietario de la mascota puede editarla (validado por RLS).
+* [X] Si se cambia la foto, la anterior se elimina de Storage para no acumular archivos huérfanos.
+* [X] Los cambios se reflejan inmediatamente en la lista y en el detalle.
+* [X] Se muestra confirmación visual de éxito o mensaje de error.
 
 | Campo        | Valor               |
 | ------------ | ------------------- |
@@ -674,12 +674,12 @@ Auth operativa (Sprint 2)
 
 **Criterios de aceptación:**
 
-* [x] Antes de eliminar, se verifica si la mascota tiene citas en estado `en_espera` o `confirmada`.
-* [x] Si tiene citas activas, se muestra advertencia indicando que deberá cancelarlas primero.
-* [x] Si no tiene citas activas, el diálogo de confirmación es simple.
-* [x] La eliminación borra la foto de Storage (si existe).
-* [x] Solo el propietario puede eliminar su mascota (RLS).
-* [x] Tras eliminar, el usuario regresa automáticamente a la lista de mascotas.
+* [X] Antes de eliminar, se verifica si la mascota tiene citas en estado `en_espera` o `confirmada`.
+* [X] Si tiene citas activas, se muestra advertencia indicando que deberá cancelarlas primero.
+* [X] Si no tiene citas activas, el diálogo de confirmación es simple.
+* [X] La eliminación borra la foto de Storage (si existe).
+* [X] Solo el propietario puede eliminar su mascota (RLS).
+* [X] Tras eliminar, el usuario regresa automáticamente a la lista de mascotas.
 
 | Campo        | Valor               |
 | ------------ | ------------------- |
@@ -1244,8 +1244,8 @@ en_espera
 | TASK-12P1 | Panel profesional - agenda     | `ProfessionalHomeScreen`,`TabBar`para vista diaria/semanal,`AppointmentTile`con datos cliente+mascota | 6h    | US-16 |
 | TASK-12P2 | Confirmar cita pendiente       | Botón condicional por estado,`AppointmentRepository.updateStatus()`, trigger notificación al cliente    | 3h    | US-17 |
 | TASK-13P1 | Cambio de estado con historial | `StatusSelector`con transiciones válidas, insert en `appointment_history`por cada cambio, RT sync      | 6h    | US-18 |
-| TASK-19P1 | GitHub Actions tests           | Workflow `.github/workflows/test.yml`,`flutter test`en cada PR a `develop`                            | 2h    | —    |
-| TASK-13P2 | Pruebas unitarias CRUD pets    | Tests para `PetRepository`: crear, leer, actualizar, eliminar con mocks de Supabase                       | 1h    | —    |
+| TASK-19P1 | GitHub Actions tests           | Workflow `.github/workflows/test.yml`,`flutter test`en cada PR a `develop`                            | 2h    | ✅    |
+| TASK-13P2 | Pruebas unitarias CRUD pets    | Tests para `PetRepository`: crear, leer, actualizar, eliminar con mocks de Supabase                       | 1h    | ✅    |
 
 ---
 
