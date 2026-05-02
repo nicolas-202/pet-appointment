@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pet_appointment/config/theme.dart';
-import 'package:pet_appointment/screens/login_screen.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
 import 'package:pet_appointment/widgets/widgets.dart';
@@ -57,10 +57,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             backgroundColor: AppColors.secondary,
           ),
         );
-        // Ir al login sin poder volver al registro
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoginScreen()),
-        );
+        // Ir al login
+        context.go('/login');
       }
     } on AuthException catch (e) {
       if (mounted) {
@@ -311,9 +309,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       titleSpacing: 16,
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => const LoginScreen()),
-          ),
+          onPressed: () => context.go('/login'),
           child: Text(
             'Iniciar sesión',
             style: TextStyle(

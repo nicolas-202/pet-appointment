@@ -1245,7 +1245,7 @@ en_espera
 | TASK-12P2 | Confirmar cita pendiente       | Botón condicional por estado,`AppointmentRepository.updateStatus()`, trigger notificación al cliente    | 3h    | US-17 |
 | TASK-13P1 | Cambio de estado con historial | `StatusSelector`con transiciones válidas, insert en `appointment_history`por cada cambio, RT sync      | 6h    | US-18 |
 | TASK-19P1 | GitHub Actions tests           | Workflow `.github/workflows/test.yml`,`flutter test`en cada PR a `develop`                            | 2h    | ✅    |
-| TASK-13P2 | Pruebas unitarias CRUD pets    | Tests para `PetRepository`: crear, leer, actualizar, eliminar con mocks de Supabase                       | 1h    | —    |
+| TASK-13P2 | Pruebas unitarias CRUD pets    | Tests para `PetRepository`: crear, leer, actualizar, eliminar con mocks de Supabase                       | 1h    | ✅    |
 
 ---
 
