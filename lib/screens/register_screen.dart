@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pet_appointment/config/theme.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
+import 'package:pet_appointment/utils/snackbar_helper.dart';
 import 'package:pet_appointment/widgets/widgets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -51,35 +51,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('¡Cuenta creada! Revisa tu correo para confirmarla.'),
-            backgroundColor: AppColors.secondary,
-          ),
+        showAppSnackBar(
+          context,
+          '¡Cuenta creada! Revisa tu correo para confirmarla.',
         );
-        // Ir al login
-        context.go('/login');
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     } on AuthException catch (e) {
-      if (mounted) {
-        final raw = e.message.toLowerCase();
-        final message =
-            raw.contains('already') ||
-                raw.contains('registered') ||
-                raw.contains('exists')
-            ? 'Ese correo ya está registrado. Intenta iniciar sesión o recuperar tu contraseña.'
-            : 'No fue posible crear la cuenta. Verifica tus datos e inténtalo de nuevo.';
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message), backgroundColor: AppColors.error),
-        );
-      }
+      if (mounted) showAppSnackBar(context, e.message, color: AppColors.error);
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error inesperado. Intenta de nuevo.'),
-            backgroundColor: AppColors.error,
-          ),
+        showAppSnackBar(
+          context,
+          'Error inesperado. Intenta de nuevo.',
+          color: AppColors.error,
         );
       }
     } finally {
@@ -100,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Text(
               'Comienza tu historia.',
               style: TextStyle(
-                fontFamily: 'Plus Jakarta Sans',
+                fontFamily: AppFonts.primary,
                 fontWeight: FontWeight.w800,
                 fontSize: 30,
                 color: AppColors.onSurface,
@@ -113,20 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             const SizedBox(height: 32),
 
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 30,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
+            FormCard(
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -218,62 +190,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ],
                     ),
                     const SizedBox(height: 28),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 58,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [AppColors.primary, Color(0xFF2F517A)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.35),
-                              blurRadius: 20,
-                              offset: Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: ElevatedButton.icon(
-                          onPressed: (_acceptedTerms && !_isLoading)
-                              ? _register
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          icon: _isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Text(
-                                  'Crear cuenta',
-                                  style: TextStyle(
-                                    fontFamily: 'Plus Jakarta Sans',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                          label: _isLoading
-                              ? const SizedBox.shrink()
-                              : const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                ),
-                        ),
-                      ),
+                    GradientPrimaryButton(
+                      label: 'Crear cuenta',
+                      onPressed: _acceptedTerms ? _register : null,
+                      isLoading: _isLoading,
                     ),
                   ],
                 ),
@@ -290,26 +210,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       backgroundColor: Colors.white.withValues(alpha: 0.85),
       elevation: 0,
       scrolledUnderElevation: 0,
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.pets, color: AppColors.primary, size: 28),
-          const SizedBox(width: 8),
-          Text(
-            'Pet Sanctuary',
-            style: TextStyle(
-              fontFamily: 'Plus Jakarta Sans',
-              fontWeight: FontWeight.w800,
-              fontSize: 18,
-              color: AppColors.primary,
-            ),
-          ),
-        ],
-      ),
+      title: const AppLogoTitle(),
       titleSpacing: 16,
       actions: [
         TextButton(
-          onPressed: () => context.go('/login'),
+          onPressed: () =>
+              Navigator.of(context).pushReplacementNamed('/login'),
           child: Text(
             'Iniciar sesión',
             style: TextStyle(
