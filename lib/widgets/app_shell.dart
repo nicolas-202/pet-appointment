@@ -5,7 +5,14 @@ import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/widgets/booking_flow_navigator.dart';
 
 class AppShell extends StatefulWidget {
-  const AppShell({super.key});
+  const AppShell({super.key, this.child});
+
+  final Widget? child;
+
+  static void selectTab(BuildContext context, int index) {
+    final shellState = context.findAncestorStateOfType<_AppShellState>();
+    shellState?._onTabSelected(index);
+  }
 
   @override
   State<AppShell> createState() => _AppShellState();
@@ -36,13 +43,11 @@ class _AppShellState extends State<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    // Si recibe un child de Go Router, usarlo; de lo contrario, mostrar la pantalla del índice
+    final body = widget.child ?? _screens[_currentIndex];
+
     return Scaffold(
-      // IndexedStack muestra solo el tab activo pero mantiene todos en memoria.
-      // Ventaja: volver al tab de Citas mantiene en qué pantalla estabas.
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
+      body: body,
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         backgroundColor: Colors.white.withValues(alpha: 0.9),

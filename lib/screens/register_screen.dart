@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pet_appointment/config/theme.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
@@ -51,14 +52,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (mounted) {
-        showAppSnackBar(
-          context,
-          '¡Cuenta creada! Revisa tu correo para confirmarla.',
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('¡Cuenta creada! Revisa tu correo para confirmarla.'),
+            backgroundColor: AppColors.secondary,
+          ),
         );
-        Navigator.of(context).pushReplacementNamed('/login');
+        // Ir al login
+        context.go('/login');
       }
     } on AuthException catch (e) {
-      if (mounted) showAppSnackBar(context, e.message, color: AppColors.error);
+      if (mounted) {
+        final raw = e.message.toLowerCase();
+        final message =
+            raw.contains('already') ||
+                raw.contains('registered') ||
+                raw.contains('exists')
+            ? 'Ese correo ya está registrado. Intenta iniciar sesión o recuperar tu contraseña.'
+            : 'No fue posible crear la cuenta. Verifica tus datos e inténtalo de nuevo.';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message), backgroundColor: AppColors.error),
+        );
+      }
     } catch (_) {
       if (mounted) {
         showAppSnackBar(
@@ -214,8 +229,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       titleSpacing: 16,
       actions: [
         TextButton(
-          onPressed: () =>
-              Navigator.of(context).pushReplacementNamed('/login'),
+          onPressed: () => context.go('/login'),
           child: Text(
             'Iniciar sesión',
             style: TextStyle(

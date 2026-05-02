@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pet_appointment/config/theme.dart';
 import 'package:pet_appointment/services/auth_service.dart';
 import 'package:pet_appointment/utils/field_validators.dart';
@@ -35,17 +36,29 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      await _authService.login(
+      final role = await _authService.login(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
 
       if (mounted) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (_) => false);
+        // Usar Go Router para navegar al home
+        context.go('/home');
       }
     } on AuthException catch (e) {
-      if (mounted) showAppSnackBar(context, e.message, color: AppColors.error);
+      if (mounted) {
+        final raw = e.message.toLowerCase();
+        final message =
+            raw.contains('confirmar tu correo') ||
+                raw.contains('email not confirmed')
+            ? 'Debes confirmar tu correo antes de iniciar sesión.'
+            : raw.contains('invalid login credentials')
+            ? 'Credenciales inválidas. Verifica tu correo y contraseña.'
+            : 'No fue posible iniciar sesión. Intenta de nuevo.';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message), backgroundColor: AppColors.error),
+        );
+      }
     } catch (_) {
       if (mounted) {
         showAppSnackBar(
@@ -118,8 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed('/forgot-password'),
+                        onPressed: () => context.go('/forgot-password'),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           minimumSize: Size.zero,
@@ -161,8 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () =>
-                      Navigator.of(context).pushReplacementNamed('/register'),
+                  onTap: () => context.go('/register'),
                   child: Text(
                     'Regístrate',
                     style: TextStyle(
