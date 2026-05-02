@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:pet_appointment/widgets/widgets.dart';
 import 'package:pet_appointment/config/config.dart';
@@ -7,11 +8,13 @@ import 'package:pet_appointment/screens/register_screen.dart';
 import 'package:pet_appointment/screens/login_screen.dart';
 import 'package:pet_appointment/screens/forgot_password_screen.dart';
 import 'package:pet_appointment/screens/reset_password_screen.dart';
+import 'package:pet_appointment/screens/calendar_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
   await _initializeSupabase();
+  await initializeDateFormatting('es_ES', null);
   runApp(const MyApp());
 }
 
@@ -45,6 +48,7 @@ class MyApp extends StatelessWidget {
         '/register': (_) => const RegisterScreen(),
         '/forgot-password': (_) => const ForgotPasswordScreen(),
         '/reset-password': (_) => const ResetPasswordScreen(),
+        '/calendar': (_) => const CalendarScreen(),
       },
     );
   }

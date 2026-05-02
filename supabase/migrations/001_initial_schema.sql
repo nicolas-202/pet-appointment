@@ -154,6 +154,14 @@ using (
   or public.is_admin()
 );
 
+-- Permite que cualquier usuario autenticado vea los profesionales
+-- (necesario para que los clientes puedan elegir un profesional al agendar).
+drop policy if exists users_select_professionals on public.users;
+create policy users_select_professionals
+on public.users
+for select
+using (role = 'professional');
+
 drop policy if exists users_insert_own_or_admin on public.users;
 create policy users_insert_own_or_admin
 on public.users
@@ -288,14 +296,16 @@ using (
 );
 
 -- APPOINTMENTS
+-- Permite que cualquier usuario autenticado vea qué slots están ocupados.
+-- Necesario para que fetchBookedSlotIds funcione: sin esto un cliente solo
+-- ve sus propias citas y los slots de otros aparecen como libres.
 drop policy if exists appointments_select_client_professional_or_admin on public.appointments;
-create policy appointments_select_client_professional_or_admin
+drop policy if exists appointments_select_booked_slots on public.appointments;
+create policy appointments_select_booked_slots
 on public.appointments
 for select
 using (
-  client_id = public.current_app_user_id()
-  or professional_id = public.current_app_user_id()
-  or public.is_admin()
+  auth.role() = 'authenticated'
 );
 
 drop policy if exists appointments_insert_client_or_admin on public.appointments;
@@ -372,6 +382,11 @@ using (public.is_admin());
 insert into storage.buckets (id, name, public)
 values ('pet-photos', 'pet-photos', true)
 on conflict (id) do nothing;
+
+-- TASK-02P1: Replica identity full para que DELETE/UPDATE envíen todos los campos al canal Realtime
+alter table public.availability       replica identity full;
+alter table public.appointments       replica identity full;
+alter table public.appointment_history replica identity full;
 
 -- TASK-02P1: Realtime en tablas necesarias
 do $$
